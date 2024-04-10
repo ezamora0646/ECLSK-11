@@ -79,4 +79,67 @@ main_df <- getData(data = eclsk11, varnames = colnames(eclsk11), addAttributes =
 
 ### Prelas total score ###
 ("x1pltot" , "x2pltot" , "x3pltot" , "x4pltot")
-summary2(main_df, "x1pltot")
+head(main_df$x1pltot, 500)
+
+
+#####     Teacher Interview Child-level variables     ######
+#t2 = spring 2011
+#Eng Native Lang 
+t2ennat, 
+
+#type of language instruction 
+t2nstnl, 
+
+# ATL items 
+t1keeps, t2keeps, t3keeps, t4keeps
+t1shows, t2shows, t3shows, t4shows
+t1works, t2works, t3works, t4works
+t1adapts, t2adapts, t3adapts, t4adapts
+t1persis, t2persis, t3persis, t4persis
+t1atten, t2atten, t3atten, t4atten
+t1follow, t2follow, t3follow, t4follow
+
+# teacher level variables; a1 2010 fall, a2 2011 spring
+#teacher directed small group activities
+a2smlgrp
+
+#daily use of non-eng language (am, pm, ad)
+a2anonen
+a2pnonen
+a2dnonen #is ad all day?
+
+##### Teacher covariates #####
+# number of years as school teacher
+a1yrstch
+
+#years at this school 
+a1yrsch
+
+#highest lvl educ achieved
+a1hghstd
+
+#year born; categorical 
+a1yrborn
+
+#Spanish used for instruction (am, pm, ad)
+a1aspnin
+a1pspnin
+a1dspnin
+
+a4spnin
+
+#teacher speaks only english (am, pm, ad)
+a1atnoot
+a1ptnoot
+a1dtnoot
+
+#teacher speaks spanish (am, pm, ad)
+a1atspnh
+a1ptspnh
+a1dtspnh
+
+a4tspnh
+
+#number of hisp in class spring 2012
+a4shisp
+#gender, certification, race/eth suppressed 
