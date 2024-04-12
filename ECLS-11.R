@@ -21,7 +21,8 @@ showWeights(data = eclsk11, verbose = TRUE) #once survey weight is selected, spe
 main_df <- getData(data = eclsk11, varnames = colnames(eclsk11), addAttributes = TRUE, omittedLevels = FALSE) #takes data from ed.survey list to traditional R df
 large.df <- getData(data = eclsk11, varnames = c("childid", "s1_id" , "s2_id" , "s3_id" , "s4_id", "x1kage_r" , 
                                                  "x2kage_r","x3age" , "x4age", "x_chsex_r", "x1locale" , "x2locale" , "x3locale" , "x4locale",
-                                                 "x2inccat_i" , "x4inccat_i", "x2povty", "x4povty_i", "x1pubpri" , "x2pubpri" , "x3pubpri" , "x4pubpri",
+                                                 "x2inccat_i" , "x4inccat_i", "x2povty", "x4povty_i", "p1hig_1", "p2hig_1", "p4hig_1_i", 
+                                                 "x1pubpri" , "x2pubpri" , "x3pubpri" , "x4pubpri",
                                                  "x1firkdg", "t1firkdg","c1spasmt", "c2spasmt" , "c3spasmt" , "c4spasmt", "c1enghm" , "c2enghm" , 
                                                  "c3nenghm" , "c4nenghm", "c1sphome" , "c2sphome" , "c3sphome" , "c4sphome", "p1prmln1", "p1prmln2", 
                                                  "p1prmlng", "t2ennat", "t4ennat", "t4kennat","x_hisp_r", "x1tchapp" , "x2tchapp", "x3tchapp", "x4tchapp","x4ktchapp",
