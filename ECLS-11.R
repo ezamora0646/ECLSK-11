@@ -44,7 +44,10 @@ large.df <- getData(data = eclsk11, varnames = c("childid", "s1_id" , "s2_id" , 
                                                  "a1atspnh", "a1ptspnh", "a1dtspnh", "a4tspnh","a1ahisp", "a1phisp", "a1dhisp", "a1acspnh", "a1pcspnh", "a1dcspnh", "a4cspnh", 
                                                  "a1aell", "a1pell", "a1dell", "a2aell", "a2pell", "a2dell", "a4ell", "a1anmell", "a1pnmell", "a1dnmell", "a4nmell",
                                                  "a1ahisp", "a1phisp", "a1dhisp", "a4shisp"), 
-                    addAttributes = TRUE, omittedLevels = FALSE)
+                    addAttributes = FALSE, omittedLevels = FALSE)
+
+write.csv(large.df, "ecls11 large df.csv")
+
 ####        General Variables     #####
 "childid" # Child ID num
 "s1_id" , "s2_id" , "s3_id" , "s4_id" # Fall/Spring Kinder/1st  SCHOOL IDENTIFICATION NUMBER
