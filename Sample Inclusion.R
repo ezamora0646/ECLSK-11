@@ -10,6 +10,7 @@ library(MissMech)
 library(correlation)#can run pairwise correlations of vars in a df 
 library(psych)
 library(GGally)#correlation plots for multiple variables in a df
+library(MASS) #for boxcox and other functions
 
 large.df <- read.csv(file.choose())
 
@@ -87,46 +88,66 @@ frst.atl <- subset(race2.sub, select= c(childid, s3_id, s4_id, x3age, x4age, x_c
                                         x3plart, x4plart, x3pltot, x4pltot, t3keeps, t4keeps, t3shows, t4shows, t3works, t4works, t3adapts, t4adapts, t3persis, t4persis, t3atten, t4atten, t3follow, t4follow,
                                         a4wksgrp, a4noneng, a4nonin, a4dscptim, a4yrstch, a4yrsch, a4hghstd, a4early, a4esl, a4devlp, a4yrborn, a4highql, a4spnin, a4tnoot, a4tspnh, a4cspnh, a4ell, a4nmell, a4shisp))
 
-dll.atl.kndr <- subset(kinder.atl, select= c(childid, x2kage_r, x2povty, kndr_par_ed, x2tchapp, x1tchapp, x2pltot, x2clsnss, x2cnflct, x2prnapp, x2inbcnt, x2attnfs, x2tchext, a1yrstch, a1yrborn, a1hghstd))
+dll.atl.kndr <- subset(kinder.atl, select= c(childid, s2_id,x2kage_r, x_chsex_r, x2povty, kndr_par_ed, x2locale, x2pubpri,x2tchapp, x1tchapp, x2pltot, x2clsnss, x2cnflct, x2prnapp, x2inbcnt, x2attnfs, x2tchext, a1yrstch, a1yrborn, a1hghstd))
 #final kinder dataset with significant predictors (w least NAs)
 
-dll.atl.frst <- subset(frst.atl, select= c(childid, x4age, x4povty_i, fst_par_ed, x4tchapp, x3tchapp, x4clsnss, x4cnflct, x4prnapp, x4attnfs, x4inbcnt, x4tchext, a4yrstch, a4yrborn,a4hghstd))
+comp.dll.kndr <- na.omit(dll.atl.kndr)
+
+
+dll.atl.frst <- subset(frst.atl, select= c(childid, x4age, x_chsex_r, x4povty_i, fst_par_ed, x4tchapp, x3tchapp, x4clsnss, x4cnflct, x4prnapp, x4attnfs, x4inbcnt, x4tchext, a4yrstch, a4yrborn,a4hghstd))
 #final first grade dataset with significant predictors (one's with least NAs)  
   
 #power analysis
 ##### Missing Values Investigation #####
-miss.var <- miss_var_summary(kinder.atl) #na summary as df 
-frst.miss.var <- miss_var_summary(frst.atl)
+miss.var <- miss_var_summary(dll.atl.kndr) #na summary as df 
+frst.miss.var <- miss_var_summary(dll.atl.frst)
+
 
 dll.atl.kndr %>% complete.cases() %>% sum() %>% print() # n = 679
 dll.atl.frst %>% complete.cases() %>% sum() %>% print() #n = 439
 
-# this syntax pairs with final fit functions below
-fall.explanatory <- c("x2pltot", "x2clsnss")
-dependent <- c("x2tchapp")
-gen.explanatory <- c("x2kage_r", "x2pltot", "x2clsnss", "x2cnflct", "x2prnapp") # had to remove categorical variables, only numeric variables work for MCAR test
+mcar_test(dll.atl.kndr) #high statistic value, low p value --> data not MCAR
+mcar_test(dll.atl.frst) #high statistic value, low p value --> data not MCAR
 
-child.covars <- c("x2kage_r", "x1kage_r","x2kage_r", "x1inbcnt", "x2inbcnt", "x1attnfs", "x2attnfs", 
-                  "x1tchext", "x2tchext", "x2pltot", "x1pltot", "x1tchapp") #missingness ranges from 1-11%
-ch.dem.covars <- c("x2tchapp","x2povty", "p1hig_1", "p1prmlng", "p1prmln1")
-class.covar <- c("t1class", "t2nstnl", "a2smlgrp", )
+#create missingness indicator for ATL 
+dll.atl.kndr$atl_na_indic <- ifelse(is.na(dll.atl.kndr$x2tchapp), 1,0)
+dll.atl.frst$atl_na_indic <- ifelse(is.na(dll.atl.frst$x4tchapp), 1,0) 
+
+#regress missing indicator on to predictors 
+mar_test_kinder <- lm(atl_na_indic~x1tchapp+x2kage_r+x2povty+kndr_par_ed, data=dll.atl.kndr)
+summary(mar_test_kinder) #missingness not related to values of the same variable --> MAR                      
+
+mar_test_frst <- lm(atl_na_indic~x3tchapp+x4age+x_chsex_r+x4povty_i+fst_par_ed, data = dll.atl.frst)
+summary(mar_test_frst) #missingness not related to value of same variable --> MAR
+
+# this syntax pairs with final fit functions below
+#fall.explanatory <- c("x2pltot", "x2clsnss")
+#dependent <- c("x2tchapp")
+#gen.explanatory <- c("x2kage_r", "x2pltot", "x2clsnss", "x2cnflct", "x2prnapp") # had to remove categorical variables, only numeric variables work for MCAR test
+
+#child.covars <- c("x2kage_r", "x1kage_r","x2kage_r", "x1inbcnt", "x2inbcnt", "x1attnfs", "x2attnfs", 
+ #                 "x1tchext", "x2tchext", "x2pltot", "x1pltot", "x1tchapp") #missingness ranges from 1-11%
+#ch.dem.covars <- c("x2tchapp","x2povty", "p1hig_1", "p1prmlng", "p1prmln1")
+#class.covar <- c("t1class", "t2nstnl", "a2smlgrp", )
 
 
 #final fit functions
-kinder.atl %>% ff_glimpse(dependent, gen.explanatory) #na summary by vairable types/lvls
+#kinder.atl %>% ff_glimpse(dependent, gen.explanatory) #na summary by vairable types/lvls
 
-kinder.atl %>% missing_pattern(dependent, gen.explanatory) #patterns in NAs --> 18 patterns in ATL missingness by prelas total & 146-7 by closeness/conflict = not completely at random
+#kinder.atl %>% missing_pattern(dependent, gen.explanatory) #patterns in NAs --> 18 patterns in ATL missingness by prelas total & 146-7 by closeness/conflict = not completely at random
 
-kinder.atl %>% missing_pairs(dependent, gen.explanatory) #visual distributions for patterns between observed and missing data
+#kinder.atl %>% missing_pairs(dependent, gen.explanatory) #visual distributions for patterns between observed and missing data
 #876 missing cells among these variables
 
-kinder.atl %>% missing_compare(dependent, fall.explanatory)
-kinder.atl %>% missing_compare(dependent, gen.explanatory)
+#kinder.atl %>% missing_compare(dependent, fall.explanatory)
+#kinder.atl %>% missing_compare(dependent, gen.explanatory)
 
-kinder.atl %>% select(all_of(gen.explanatory)) %>% mcar_test() #data for explanatory variables not missing completely at random
+#kinder.atl %>% select(all_of(gen.explanatory)) %>% mcar_test() #data for explanatory variables not missing completely at random
 
-kinder.atl %>% select(all_of(gen.explanatory)) %>% TestMCARNormality()
+#kinder.atl %>% select(all_of(gen.explanatory)) %>% TestMCARNormality()
 #kinder.atl %>% select(all_of(gen.explanatory)) %>% MissMech::TestMCARNormality(., del.lesscases=1) #Hawkins Test = reject hyp that data is MCAR; parametric insufficient evidence to reject MCAR
 
-TestMCARNormality(data=kinder.atl , del.lesscases=1)
 
+
+
+   

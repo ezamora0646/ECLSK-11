@@ -111,7 +111,7 @@ kinder.atl$kndr_par_ed <- factor(kinder.atl$kndr_par_ed, labels = c("Less than H
 
 ###### Distributions of kinder predictors #####
 ggplot(kinder.atl, aes(x=x2tchapp)) + 
-  geom_histogram(aes(y = ..density..), colour = "black", fill="white") + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
   stat_function(fun = dnorm, args = list(mean = mean(kinder.atl$x2tchapp, na.rm=TRUE), sd = sd(kinder.atl$x2tchapp, na.rm=TRUE)), color="red")
 
 ggplot(kinder.atl, aes(x=x2pltot)) + 
@@ -119,11 +119,11 @@ ggplot(kinder.atl, aes(x=x2pltot)) +
   stat_function(fun = dnorm, args = list(mean = mean(kinder.atl$x2pltot, na.rm=TRUE), sd = sd(kinder.atl$x2pltot, na.rm=TRUE)), color="red")
 
 ggplot(kinder.atl, aes(x=x2clsnss)) + 
-  geom_histogram(aes(y = ..density..), colour = "black", fill="white") + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
   stat_function(fun = dnorm, args = list(mean = mean(kinder.atl$x2clsnss, na.rm=TRUE), sd = sd(kinder.atl$x2clsnss, na.rm=TRUE)), color="red")
 
 ggplot(kinder.atl, aes(x=x2cnflct)) + 
-  geom_histogram(aes(y = ..density..), colour = "black", fill="white") + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
   stat_function(fun = dnorm, args = list(mean = mean(kinder.atl$x2cnflct, na.rm=TRUE), sd = sd(kinder.atl$x2cnflct, na.rm=TRUE)), color="red")
 
 
@@ -160,7 +160,7 @@ pairs(child.covars[,1:6], pch=19)
 #homoscedacity
 predicted <- fitted(full.reg.ck)
 resids <- residuals(full.reg.ck)
-plot(predicted, resids, xlab="Predicted Values", ylab="Residuals", pch=20)
+plot(predicted, resids, xlab="Predicted Values - Original", ylab="Residuals", pch=20)
 abline(h=0, col="blue")
 
 #Normality w PP Plot 
@@ -189,3 +189,101 @@ vif(full.reg.ck, type = "predictor")
 
 #year born and years XP may also be presenting multicolinearity issues... 
 #should keep years XP since it may be more correlated with ATL and less levels
+
+
+
+#log transformation of variables 
+dll.atl.kndr$atl_log <- log(dll.atl.kndr$x2tchapp) #still skewed after + 5, 10 and 20
+describe(dll.atl.kndr$atl_log)
+
+ggplot(dll.atl.kndr, aes(x=atl_log)) + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
+  stat_function(fun = dnorm, args = list(mean = mean(dll.atl.kndr$atl_log, na.rm=TRUE), sd = sd(dll.atl.kndr$atl_log, na.rm=TRUE)), color="red")
+
+dll.atl.kndr$atl_inv <- 1/(max(dll.atl.kndr$x2tchapp + 1) - dll.atl.kndr$x2tchapp)
+
+dll.atl.kndr$atl_sqrt <- sqrt(dll.atl.kndr$x2tchapp)
+
+ggplot(dll.atl.kndr, aes(x=atl_sqrt)) + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
+  stat_function(fun = dnorm, args = list(mean = mean(dll.atl.kndr$atl_sqrt, na.rm=TRUE), sd = sd(dll.atl.kndr$atl_sqrt, na.rm=TRUE)), color="red")
+
+#sqaured transformation 
+dll.atl.kndr$atl_sqrd <- (dll.atl.kndr$x2tchapp)^2
+ggplot(dll.atl.kndr, aes(x=atl_sqrd)) + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
+  stat_function(fun = dnorm, args = list(mean = mean(dll.atl.kndr$atl_sqrd, na.rm=TRUE), sd = sd(dll.atl.kndr$atl_sqrd, na.rm=TRUE)), color="red")
+
+describe(dll.atl.kndr$x2tchapp)
+describe(dll.atl.kndr$atl_sqrd)
+
+
+dll.atl.kndr$clsnss_sqrd <- (dll.atl.kndr$x2clsnss)^2
+ggplot(dll.atl.kndr, aes(x=clsnss_sqrd)) + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
+  stat_function(fun = dnorm, args = list(mean = mean(dll.atl.kndr$clsnss_sqrd, na.rm=TRUE), sd = sd(dll.atl.kndr$clsnss_sqrd, na.rm=TRUE)), color="red")
+
+describe(dll.atl.kndr$x2clsnss)
+describe(dll.atl.kndr$clsnss_sqrd)
+
+dll.atl.kndr[,-c(#,#)] to delete columns #-# 
+)]
+
+#box-cox to ID proper transformation 
+boxcox(lm(dll.atl.kndr$x2tchapp ~ 1)) #x^2 transformation
+shapiro.test(dll.atl.kndr$atl_sqrd)
+
+boxcox(lm(dll.atl.kndr$x2clsnss ~ 1)) #x^2 transformation
+
+boxcox(lm(dll.atl.kndr$x2cnflct ~ 1)) #1/x^2 transformation
+
+
+#new regression assumption check - only DV adjusted
+adj.reg.chk <- lm(atl_sqrd~x2kage_r+x2povty+kndr_par_ed+
+                    x1tchapp+x2prnapp+x2inbcnt+x2attnfs+x2tchext+
+                    a1yrstch+a1yrborn+a1hghstd+
+                    x2pltot+x2clsnss+x2pltot:x2clsnss, data=dll.atl.kndr)
+summary(adj.reg.chk)
+anova(adj.reg.chk)
+
+
+#homoscedacity
+predicted2 <- fitted(adj.reg.chk)
+resids2 <- residuals(adj.reg.chk)
+plot(predicted2, resids2, xlab="Predicted Values - Transformed", ylab="Residuals", pch=20)
+abline(h=0, col="blue")
+
+#Normality w PP Plot 
+rstandard2 <- (resids2 - mean(resids2))/sd(resids2)
+qqnorm(rstandard2)
+qqline(rstandard2)
+#variance could be constant within clusters... havent inputted clustered SEs
+adj.se <- coeftest(adj.reg.chk, vcov. = vcovCL, cluster= ~s2_id)
+adj.pred <- fitted(adj.se)
+
+
+#histogram of standardized residuals 
+hist(rstandard2, breaks=50, prob=TRUE)
+curve(dnorm(x, mean=mean(rstandard2), sd(rstandard2)), add=TRUE)
+
+
+####### principal component analysis  - RERUN after imputing #####
+pca.kinder.df <-  subset(dll.atl.kndr, select= c(x2clsnss, x2cnflct)) #PCA for closeness and conflict only
+# do just closeness and conflict 
+# save factor from output - computed DV used in analysis: weighted factor score across 2 subscales, % of var, eigen value 
+# factor 1 40% of variance, notably bigger 
+
+comp.pca.kndr <- na.omit(pca.kinder.df)
+pca.kinder.rslt <- prcomp(comp.pca.kndr, scale=TRUE)
+summary(pca.kinder.rslt) #lists importance of components
+names(pca.kinder.rslt) #rotation provides eigen vectors, loadings per component/variable 
+
+pca.kinder.rslt$rotation 
+eigen.val <- (pca.kinder.rslt$sdev)^2 #report when justifying composite relationship variable 
+
+pca.kinder.rslt$x #principal component scores for each obs/ student
+
+fviz_eig(pca.kinder.rslt, addlabels=TRUE) #explained variance per component, helps decide optimal number of components to be retained in analysis
+#first component explains 65.2% of variance in linear combinations of 2 variables 
+fviz_pca_biplot(pca.kinder.rslt, label = "var")
+
