@@ -1,3 +1,9 @@
+#replacing -9 with NA - prep for imputation 
+occurrences <- sapply(dll.atl.frst, function(col) sum(col == "-9: NOT ASCERTAINED"))
+print(occurrences)
+
+dll.atl.kndr <- dll.atl.kndr %>% replace_with_na_all(condition = ~.x =="-9: NOT ASCERTAINED")
+dll.atl.frst <- dll.atl.frst %>% replace_with_na_all(condition = ~.x =="-9: NOT ASCERTAINED")
 
 ###### ANALYSIS OF PREDICTORS #####
 # first grade
@@ -81,10 +87,10 @@ ggpairs(ch.dem.covars, upper = list(continuous = wrap(ggally_cor, stars = F)))
 
 kinder.atl <- kinder.atl %>% 
   mutate(kndr_par_ed = recode(p1hig_1, 
+                              "-7: REFUSED" = NA_character_,                                                        
+                              "-8: DON'T KNOW" = NA_character_,                                                     
+                              "-9: NOT ASCERTAINED" = NA_character_,
                               "-1: NOT APPLICABLE" = "-1",
-                              "-7: REFUSED" = "-1",                                                        
-                              "-8: DON'T KNOW" = "-1",                                                     
-                              "-9: NOT ASCERTAINED" = "-1", 
                               "7: 7TH GRADE OR LESS"  = "11",                                               
                               "8: 8TH GRADE"  = "11",                                                       
                               "9: 9TH GRADE"  = "11",                                                       
@@ -106,8 +112,9 @@ kinder.atl <- kinder.atl %>%
                               ))
 
 kinder.atl$kndr_par_ed <- factor(kinder.atl$kndr_par_ed, labels = c("Less than HS", "HS or equiv", 
-                                       "Voc/AA: degree or no degree", "Bachelors", "Grad or prof school", "Not applicable"), ordered = TRUE)
+                                       "Voc/AA: degree or no degree", "Bachelors", "Grad or prof school"), ordered = TRUE)
 
+#kinder.atl <- subset(kinder.atl, select = -kndr_par_ed)
 
 ###### Distributions of kinder predictors #####
 ggplot(kinder.atl, aes(x=x2tchapp)) + 
@@ -273,6 +280,7 @@ pca.kinder.df <-  subset(dll.atl.kndr, select= c(x2clsnss, x2cnflct)) #PCA for c
 # save factor from output - computed DV used in analysis: weighted factor score across 2 subscales, % of var, eigen value 
 # factor 1 40% of variance, notably bigger 
 
+library(factoextra)
 comp.pca.kndr <- na.omit(pca.kinder.df)
 pca.kinder.rslt <- prcomp(comp.pca.kndr, scale=TRUE)
 summary(pca.kinder.rslt) #lists importance of components

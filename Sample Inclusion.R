@@ -88,7 +88,7 @@ frst.atl <- subset(race2.sub, select= c(childid, s3_id, s4_id, x3age, x4age, x_c
                                         x3plart, x4plart, x3pltot, x4pltot, t3keeps, t4keeps, t3shows, t4shows, t3works, t4works, t3adapts, t4adapts, t3persis, t4persis, t3atten, t4atten, t3follow, t4follow,
                                         a4wksgrp, a4noneng, a4nonin, a4dscptim, a4yrstch, a4yrsch, a4hghstd, a4early, a4esl, a4devlp, a4yrborn, a4highql, a4spnin, a4tnoot, a4tspnh, a4cspnh, a4ell, a4nmell, a4shisp))
 
-dll.atl.kndr <- subset(kinder.atl, select= c(childid, s2_id,x2kage_r, x_chsex_r, x2povty, kndr_par_ed, x2locale, x2pubpri,x2tchapp, x1tchapp, x2pltot, x2clsnss, x2cnflct, x2prnapp, x2inbcnt, x2attnfs, x2tchext, a1yrstch, a1yrborn, a1hghstd))
+dll.atl.kndr <- subset(kinder.atl, select= c(childid, s2_id, x2kage_r, x_chsex_r, x2povty, kndr_par_ed, x2locale, x2pubpri,x2tchapp, x1tchapp, x2pltot, x2clsnss, x2cnflct, x2prnapp, x2inbcnt, x2attnfs, x2tchext, a1yrstch, a1yrborn, a1hghstd))
 #final kinder dataset with significant predictors (w least NAs)
 
 comp.dll.kndr <- na.omit(dll.atl.kndr)
