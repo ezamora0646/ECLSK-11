@@ -1,9 +1,55 @@
-#replacing -9 with NA - prep for imputation 
+######## #replacing -9 with NA - prep for imputation #####
 occurrences <- sapply(dll.atl.frst, function(col) sum(col == "-9: NOT ASCERTAINED"))
 print(occurrences)
 
 dll.atl.kndr <- dll.atl.kndr %>% replace_with_na_all(condition = ~.x =="-9: NOT ASCERTAINED")
 dll.atl.frst <- dll.atl.frst %>% replace_with_na_all(condition = ~.x =="-9: NOT ASCERTAINED")
+
+###### ATL AS BINARY OUTCOME VARIABLE ####### 
+#kinder
+summary(dll.atl.kndr$x2tchapp)
+#Q3 is median of largest values in distribition --> 3.714
+Q3 <- 3.714
+med <- 3.14
+avg <- 3.120
+
+#adding vertical line at Q3 on histogram 
+ggplot(dll.atl.kndr, aes(x=x2tchapp)) + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
+  stat_function(fun = dnorm, args = list(mean = mean(dll.atl.kndr$x2tchapp, na.rm=TRUE), sd = sd(dll.atl.kndr$x2tchapp, na.rm=TRUE)), color="red") +
+  geom_vline(xintercept = Q3, linetype = "dashed", color = "blue", size = 1) +
+  labs(title = "ATL Distribution for DLLs",
+       x = "ATL Spring Scores",
+       y = "Density")
+
+table(dll.atl.kndr$x2tchapp >= Q3, useNA = "ifany") # 353 students with high ATL, 906 low ATL 
+
+#binary outcome variable 
+dll.atl.kndr <- dll.atl.kndr %>% mutate(cat.atl = factor(if_else(x2tchapp>=Q3,1,0, missing=NULL),
+                                                         levels = c(0,1),
+                                                         labels = c("Low", "High")))
+table(dll.atl.kndr$cat.atl, useNA = "ifany")
+
+# first grade ATL recoding 
+summary(dll.atl.frst$x4tchapp)
+fst.q3 <- 3.571
+
+#histogram w q3 vert line
+ggplot(dll.atl.frst, aes(x=x4tchapp)) + 
+  geom_histogram(aes(y = after_stat(density)), colour = "black", fill="white") + 
+  stat_function(fun = dnorm, args = list(mean = mean(dll.atl.frst$x4tchapp, na.rm=TRUE), sd = sd(dll.atl.frst$x4tchapp, na.rm=TRUE)), color="red") +
+  geom_vline(xintercept = fst.q3, linetype = "dashed", color = "blue", size = 1) +
+  labs(title = "ATL Distribution for DLLs",
+       x = "1st ATL Spring Scores",
+       y = "Density")
+
+table(dll.atl.frst$x4tchapp >= fst.q3, useNA = "ifany")
+
+#binary outcome variable 1st grade atl 
+dll.atl.frst <- dll.atl.frst %>% mutate(fst.cat.atl = factor(if_else(x4tchapp>=fst.q3,1,0, missing=NULL),
+                                                             levels = c(0,1),
+                                                             labels = c("Low", "High")))
+table(dll.atl.frst$fst.cat.atl, useNA = "ifany")
 
 ###### ANALYSIS OF PREDICTORS #####
 # first grade
