@@ -51,7 +51,54 @@ dll.atl.frst <- dll.atl.frst %>% mutate(fst.cat.atl = factor(if_else(x4tchapp>=f
                                                              labels = c("Low", "High")))
 table(dll.atl.frst$fst.cat.atl, useNA = "ifany")
 
-###### ANALYSIS OF PREDICTORS #####
+
+###### Creating preLAS variable for first grade #####
+table(kinder.atl$x1pltot, useNA = "ifany") #36 NAs... at this point these can be taken as truly missing since everyone as administered
+table(kinder.atl$x2pltot, useNA = "ifany") #18 NAs truly missing... everyone was administered prelas in fall and spring
+36+18
+
+kinder.atl %>% mutate(condition = 
+                        (x1pltot>=16) | (x2pltot >=16)) %>% 
+  reframe(frequencies=table(condition)) 
+# so 1024 students will have NA in first grade since they passed at some point in kinder
+
+kinder.atl <- kinder.atl%>% mutate(prelas.diff = x2pltot - x1pltot)
+
+table(frst.atl$x3pltot, useNA = "ifany")
+table(frst.atl$x3pltot >=16, useNA = "ifany") #19 students achieved prof at fall of first, 52 did not 
+#1333 total NAs in fall of 1st - 1024 who passed in kinder = 309 true NAs 
+1333-1024
+
+table(frst.atl$x4pltot, useNA = "ifany") # 5 more NAs than in fall of 1st
+table(frst.atl$x4pltot >=16, useNA = "ifany") #26 students achieved prof in spring, 40 did not  
+19+26
+
+frst.atl %>% mutate(condition = 
+(x3pltot >=16 | x4pltot >=16)) %>% 
+  reframe(frequencies=table(condition)) #45 students achieved prof in fall/spring of 1st
+
+race2.sub <- race2.sub %>% mutate(frst.prof = case_when(
+                      (x1pltot>=16 | x2pltot >=16) ~1, 
+                      (x3pltot >=16 | x4pltot >=16) ~ 2, 
+                      TRUE ~ 3))
+table(race2.sub$frst.prof, useNA = "ifany")
+1024+42+338
+
+ggplot(race2.sub, aes(x = factor(frst.prof))) +
+  geom_bar() +
+  labs(title = "Distribution of frst.prof",
+       x = "frst.prof levels",
+       y = "Count")
+
+race2.sub <- subset(race2.sub, select = c(childid, frst.prof))
+#dll.atl.frst$childid <- as.integer(dll.atl.frst$childid)
+
+dll.atl.frst <- dll.atl.frst %>% 
+  left_join(dplyr::select(race2.sub, childid, frst.prof), by = "childid")
+
+#dll.atl.frst <- subset(dll.atl.frst, select=-frst.prof)
+
+###### ANALYSIS OF PREDICTORS ##### conducted prior to shift to logistic regression... AKA linear regression check
 # first grade
 
 frst.predictors <- frst.atl[, c("x4tchapp", "x3tchapp", "x4clsnss", "x4cnflct")] #since prelas was not readminsitered to proficient students... what to use as prof?
