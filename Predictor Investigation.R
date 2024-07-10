@@ -96,6 +96,7 @@ race2.sub <- subset(race2.sub, select = c(childid, frst.prof))
 dll.atl.frst <- dll.atl.frst %>% 
   left_join(dplyr::select(race2.sub, childid, frst.prof), by = "childid")
 
+dll.atl.frst <- dll.atl.frst %>% mutate(frst.prof = factor(frst.prof, levels= c(1,2,3), labels= c("In K", "In 1st", "After 1st")))
 #dll.atl.frst <- subset(dll.atl.frst, select=-frst.prof)
 
 ###### ANALYSIS OF PREDICTORS ##### conducted prior to shift to logistic regression... AKA linear regression check
