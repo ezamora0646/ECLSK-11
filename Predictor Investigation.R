@@ -1,8 +1,17 @@
 ######## #replacing -9 with NA - prep for imputation #####
-occurrences <- sapply(dll.atl.frst, function(col) sum(col == "-9: NOT ASCERTAINED"))
+occurrences <- sapply(dll.atl.kndr, function(col) sum(col == "-9: NOT ASCERTAINED"))
 print(occurrences)
 
-dll.atl.kndr <- dll.atl.kndr %>% replace_with_na_all(condition = ~.x =="-9: NOT ASCERTAINED")
+dll.atl.frst$x_chsex_r[dll.atl.frst$x_chsex_r == "-9: NOT ASCERTAINED"] <- NA
+dll.atl.frst$x_chsex_r <- droplevels(dll.atl.frst$x_chsex_r)
+
+
+occurrences <- sapply(dll.atl.kndr, function(col) sum(col == "-9: NOT ASCERTAINED"))
+print(occurrences)
+
+
+dll.atl.kndr <- dll.atl.kndr %>% replace_with_na_all(condition = ~.x =="-9: NOT ASCERTAINED") %>% 
+  mutate(across(where(is.factor), fct_drop))
 dll.atl.frst <- dll.atl.frst %>% replace_with_na_all(condition = ~.x =="-9: NOT ASCERTAINED")
 
 ###### ATL AS BINARY OUTCOME VARIABLE ####### 
@@ -51,6 +60,7 @@ dll.atl.frst <- dll.atl.frst %>% mutate(fst.cat.atl = factor(if_else(x4tchapp>=f
                                                              labels = c("Low", "High")))
 table(dll.atl.frst$fst.cat.atl, useNA = "ifany")
 
+#check correlation kinder and 1st categorical variable 
 
 ###### Creating preLAS variable for first grade #####
 table(kinder.atl$x1pltot, useNA = "ifany") #36 NAs... at this point these can be taken as truly missing since everyone as administered
@@ -62,7 +72,7 @@ kinder.atl %>% mutate(condition =
   reframe(frequencies=table(condition)) 
 # so 1024 students will have NA in first grade since they passed at some point in kinder
 
-kinder.atl <- kinder.atl%>% mutate(prelas.diff = x2pltot - x1pltot)
+kinder.atl <- kinder.atl%>% mutate(prelas.diff = x2pltot - x1pltot) #report descriptively 
 
 table(frst.atl$x3pltot, useNA = "ifany")
 table(frst.atl$x3pltot >=16, useNA = "ifany") #19 students achieved prof at fall of first, 52 did not 
@@ -82,7 +92,6 @@ race2.sub <- race2.sub %>% mutate(frst.prof = case_when(
                       (x3pltot >=16 | x4pltot >=16) ~ 2, 
                       TRUE ~ 3))
 table(race2.sub$frst.prof, useNA = "ifany")
-1024+42+338
 
 ggplot(race2.sub, aes(x = factor(frst.prof))) +
   geom_bar() +
@@ -90,11 +99,11 @@ ggplot(race2.sub, aes(x = factor(frst.prof))) +
        x = "frst.prof levels",
        y = "Count")
 
-race2.sub <- subset(race2.sub, select = c(childid, frst.prof))
+temp.race2.sub <- getData(data= race2.sub, varnames = c("childid", "frst.prof"), addAttributes = TRUE, dropOmittedLevels = FALSE)
 #dll.atl.frst$childid <- as.integer(dll.atl.frst$childid)
 
 dll.atl.frst <- dll.atl.frst %>% 
-  left_join(dplyr::select(race2.sub, childid, frst.prof), by = "childid")
+  left_join(dplyr::select(temp.race2.sub, childid, frst.prof), by = "childid")
 
 dll.atl.frst <- dll.atl.frst %>% mutate(frst.prof = factor(frst.prof, levels= c(1,2,3), labels= c("In K", "In 1st", "After 1st")))
 #dll.atl.frst <- subset(dll.atl.frst, select=-frst.prof)
@@ -123,29 +132,79 @@ ggplot(frst.atl, aes(x4povty_i, x4tchapp)) + geom_boxplot()
 frst.dem.covars <- frst.atl[, c("x4tchapp", "x4povty_i", "fst_par_ed")]
 ggpairs(frst.dem.covars, upper = list(continuous = wrap(ggally_cor, stars = F))) #correlation plots for multiple variables in a df
 
-frst.atl<- frst.atl %>%
-  mutate(fst_par_ed = recode(p4hig_1_i, 
-                             "-1: NOT APPLICABLE" = "-1",
-                             "7: 7TH GRADE OR LESS"  = "11",                                               
-                            "8: 8TH GRADE"  = "11",                                                       
-                            "9: 9TH GRADE"  = "11",                                                       
-                            "10: 10TH GRADE"  = "11",                                                     
-                            "11: 11TH GRADE"  = "11",                                                     
-                            "12: 12TH GRADE BUT NO DIPLOMA" = "11", 
-                             "13: HIGH SCHOOL EQUIVALENT/GED" = "12",                                     
-                               "14: HIGH SCHOOL DIPLOMA" = "12",
-                             "15: VOC/TECH PROGRAM AFTER HIGH SCHOOL BUT NO VOC/TECH DIPLOMA" = "13",     
-                               "16: VOC/TECH PROGRAM AFTER HIGH SCHOOL DIPLOMA" = "13",                     
-                            "17: SOME COLLEGE BUT NO DEGREE"= "13", 
-                            "18: ASSOCIATE'S DEGREE" = "13",
-                             "19: BACHELOR'S DEGREE" = "14", 
-                             "20: GRADUATE OR PROFESSIONAL SCHOOL BUT NO DEGREE" = "15",                  
-                               "21: MASTER'S (MA MS)" = "15",                                               
-                               "22: DOCTORATE DEGREE (PHD EDD)" = "15",                                     
-                               "23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB)" = "15", 
-                            .default = NULL
-                             ))
-frst.atl$fst_par_ed <- factor(frst.atl$fst_par_ed, labels = c("Less than HS", "HS or equiv", 
+
+###### Recoding parent education 1st grade #####
+
+
+# Step 1: Recode -1: NOT APPLICABLE to 0
+frst.atl <- recode.sdf(frst.atl, recode = list(
+  p4hig_1_i = list(from = c("-1: NOT APPLICABLE"), to = c("Not Applicable"))
+))
+
+# Step 2: Recode all values for 7TH GRADE OR LESS to 12TH GRADE BUT NO DIPLOMA to 11
+frst.atl <- recode.sdf(frst.atl, recode = list(
+  p4hig_1_i = list(from = c("7: 7TH GRADE OR LESS", "8: 8TH GRADE", "9: 9TH GRADE", 
+                            "10: 10TH GRADE", "11: 11TH GRADE", "12: 12TH GRADE BUT NO DIPLOMA"), 
+                   to = c("Less than HS"))
+))
+
+# Step 3: Recode HIGH SCHOOL EQUIVALENT/GED to HIGH SCHOOL DIPLOMA to 12
+frst.atl <- recode.sdf(frst.atl, recode = list(
+  p4hig_1_i = list(from = c("13: HIGH SCHOOL EQUIVALENT/GED", "14: HIGH SCHOOL DIPLOMA"), 
+                   to = c("HS or equiv"))
+))
+
+# Step 4: Recode VOC/TECH PROGRAM and SOME COLLEGE to ASSOCIATE'S DEGREE to 13
+frst.atl <- recode.sdf(frst.atl, recode = list(
+  p4hig_1_i = list(from = c("15: VOC/TECH PROGRAM AFTER HIGH SCHOOL BUT NO VOC/TECH DIPLOMA", 
+                            "16: VOC/TECH PROGRAM AFTER HIGH SCHOOL DIPLOMA", 
+                            "17: SOME COLLEGE BUT NO DEGREE", 
+                            "18: ASSOCIATE'S DEGREE"), 
+                   to = c("Some College: Voc/AA"))
+))
+
+# Step 5: Recode BACHELOR'S DEGREE to 14
+frst.atl <- recode.sdf(frst.atl, recode = list(
+  p4hig_1_i = list(from = c("19: BACHELOR'S DEGREE"), 
+                   to = c("Bachelors"))
+))
+
+# Step 6: Recode GRADUATE OR PROFESSIONAL SCHOOL to PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE to 15
+frst.atl <- recode.sdf(frst.atl, recode = list(
+  p4hig_1_i = list(from = c("20: GRADUATE OR PROFESSIONAL SCHOOL BUT NO DEGREE", 
+                            "21: MASTER'S (MA MS)", 
+                            "22: DOCTORATE DEGREE (PHD EDD)", 
+                            "23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB)"), 
+                   to = c("Grad or prof school"))
+))
+
+
+
+table(frst.atl$p4hig_1_i, useNA = "ifany")
+
+#dply syntax not compatible with EdSurvey light objexts
+#frst.atl<- frst.atl %>%
+  #mutate(fst_par_ed = recode(p4hig_1_i, 
+                   #          "-1: NOT APPLICABLE" = "0",
+                  #           "7: 7TH GRADE OR LESS"  = "11",                                               
+                 #           "8: 8TH GRADE"  = "11",                                                       
+                #             "10: 10TH GRADE"  = "11",                                                     
+              #              "11: 11TH GRADE"  = "11",                                                     
+             #               "12: 12TH GRADE BUT NO DIPLOMA" = "11", 
+            #                 "13: HIGH SCHOOL EQUIVALENT/GED" = "12",                                     
+           #                    "14: HIGH SCHOOL DIPLOMA" = "12",
+           #                  "15: VOC/TECH PROGRAM AFTER HIGH SCHOOL BUT NO VOC/TECH DIPLOMA" = "13",     
+          #                     "16: VOC/TECH PROGRAM AFTER HIGH SCHOOL DIPLOMA" = "13",                     
+         #                   "17: SOME COLLEGE BUT NO DEGREE"= "13", 
+        #                    "18: ASSOCIATE'S DEGREE" = "13",
+       #                      "19: BACHELOR'S DEGREE" = "14", 
+      #                       "20: GRADUATE OR PROFESSIONAL SCHOOL BUT NO DEGREE" = "15",                  
+     #                          "21: MASTER'S (MA MS)" = "15",                                               
+    #                           "22: DOCTORATE DEGREE (PHD EDD)" = "15",                                     
+   #                            "23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB)" = "15", 
+  #                          .default = NULL
+ #                            ))
+#frst.atl$fst_par_ed <- factor(frst.atl$fst_par_ed, labels = c("Less than HS", "HS or equiv", 
                                                               "Voc/AA: degree or no degree", "Bachelors", "Grad or prof school", "Not applicable"), ordered = TRUE)
  
 frst.tch.covars <- frst.atl[, c("x4tchapp", "a4nmell", "a4shisp", "a4yrsch", "a4yrstch", "a4wksgrp", "a4dscptim", "a4hghstd", 
@@ -179,6 +238,56 @@ ch.dem.covars <- kinder.atl[, c("x2tchapp","x2povty","kndr_par_ed")] #income cat
 #will have to recode parent ed
 ggpairs(ch.dem.covars, upper = list(continuous = wrap(ggally_cor, stars = F)))
 
+
+kinder.atl$p1hig_1[kinder.atl$p1hig_1 == "-9: NOT ASCERTAINED"] <- NA
+kinder.atl$p1hig_1[kinder.atl$p1hig_1 == "-7: REFUSED"] <- NA
+kinder.atl$p1hig_1 <- droplevels(kinder.atl$p1hig_1)
+
+kinder.atl <- recode.sdf(kinder.atl, recode = list(
+  p1hig_1 = list(from = c("-8: DON'T KNOW"),
+                 to = c("Not Applicable"))
+))
+
+kinder.atl <- recode.sdf(kinder.atl, recode = list(
+  p1hig_1 = list(from = c("7: 7TH GRADE OR LESS",                                              
+                           "8: 8TH GRADE",                                                       
+                           "9: 9TH GRADE",                                                       
+                           "10: 10TH GRADE",                                                     
+                           "11: 11TH GRADE",                                                     
+                           "12: 12TH GRADE BUT NO DIPLOMA"),
+                 to = c("Less than HS"))
+))
+
+kinder.atl <- recode.sdf(kinder.atl, recode = list(
+  p1hig_1 = list(from = c("13: HIGH SCHOOL DIPLOMA/EQUIVALENT",                                 
+                          "14: HIGH SCHOOL DIPLOMA" ),
+                 to = c("HS or equiv"))
+))
+
+kinder.atl <- recode.sdf(kinder.atl, recode = list(
+  p1hig_1 = list(from = c("15: VOC/TECH PROG AFTER HIGH SCHOOL NO DIPLOMA",                     
+                          "16: VOC/TECH PROGRAM AFTER HIGH SCHOOL",                             
+                          "17: SOME COLLEGE BUT NO DEGREE",                                     
+                          "18: ASSOCIATE'S DEGREE"),
+                 to = c("Some College: Voc/AA"))
+))
+
+kinder.atl <- recode.sdf(kinder.atl, recode = list(
+  p1hig_1 = list(from = c("19: BACHELOR'S DEGREE"),
+                 to = c("Bachelors"))
+))
+
+kinder.atl <- recode.sdf(kinder.atl, recode = list(
+  p1hig_1 = list(from = c("20: GRADUATE/PROFESSIONAL SCHOOL - NO DEGREE",                       
+                          "21: MASTER'S DEGREE (MA, MS)",                                       
+                          "22: DOCTORATE DEGREE (PH.D., ED.D.)",                                
+                          "23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB)"),
+                 to = c("Grad or prof school"))
+))
+
+
+table(kinder.atl$p1hig_1, useNA = "ifany")
+
 kinder.atl <- kinder.atl %>% 
   mutate(kndr_par_ed = recode(p1hig_1, 
                               "-7: REFUSED" = NA_character_,                                                        
@@ -208,6 +317,52 @@ kinder.atl <- kinder.atl %>%
 kinder.atl$kndr_par_ed <- factor(kinder.atl$kndr_par_ed, labels = c("Less than HS", "HS or equiv", 
                                        "Voc/AA: degree or no degree", "Bachelors", "Grad or prof school"), ordered = TRUE)
 
+
+7: 7TH GRADE OR LESS 
+259 
+8: 8TH GRADE 
+48 
+9: 9TH GRADE 
+124 
+10: 10TH GRADE 
+48 
+11: 11TH GRADE 
+63 
+12: 12TH GRADE BUT NO DIPLOMA 
+69 
+13: HIGH SCHOOL DIPLOMA/EQUIVALENT 
+25 
+14: HIGH SCHOOL DIPLOMA 
+188 
+15: VOC/TECH PROG AFTER HIGH SCHOOL NO DIPLOMA 
+14 
+16: VOC/TECH PROGRAM AFTER HIGH SCHOOL 
+30 
+17: SOME COLLEGE BUT NO DEGREE 
+73 
+18: ASSOCIATE'S DEGREE 
+                                                                 18 
+                                              19: BACHELOR'S DEGREE 
+33 
+20: GRADUATE/PROFESSIONAL SCHOOL - NO DEGREE 
+2 
+21: MASTER'S DEGREE (MA, MS) 
+                                                                 11 
+                                22: DOCTORATE DEGREE (PH.D., ED.D.) 
+                                                                  2 
+23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB) 
+2 
+-7: REFUSED 
+6 
+-8: DONT KNOW 
+                                                                  4 
+                                                -9: NOT ASCERTAINED 
+                                                                 11 
+                                                               <NA> 
+                                                                374 
+
+
+
 #kinder.atl <- subset(kinder.atl, select = -kndr_par_ed)
 
 ###### Distributions of kinder predictors #####
@@ -231,7 +386,7 @@ ggplot(kinder.atl, aes(x=x2cnflct)) +
 ###### REGRESSION ASSUMPTION CHECK ####### 
 #fitting regression 
 full.reg.ck <- lm(x2tchapp~x2kage_r+x2povty+kndr_par_ed+
-                    x1tchapp+x2prnapp+x2inbcnt+x2attnfs+x2tchext+
+                    x1tchapp+x2prnapp+x2inbcnt+x2attnfs+x2tchext+x2cnflct+
                     a1yrstch+a1yrborn+a1hghstd+
                     x2pltot+x2clsnss+x2pltot:x2clsnss, data=dll.atl.kndr)
 summary(full.reg.ck)
@@ -388,4 +543,32 @@ pca.kinder.rslt$x #principal component scores for each obs/ student
 fviz_eig(pca.kinder.rslt, addlabels=TRUE) #explained variance per component, helps decide optimal number of components to be retained in analysis
 #first component explains 65.2% of variance in linear combinations of 2 variables 
 fviz_pca_biplot(pca.kinder.rslt, label = "var")
+
+
+
+## power Analysis 
+rm(logit)
+
+logit <- glm(I(cat.atl=="High") ~ x1tchapp+x2kage_r+x2povty+kndr_par_ed+
+               x1tchapp+x2prnapp+x2inbcnt+x2attnfs+
+               a1yrstch+a1hghstd+
+               x2pltot+x2cnflct+x2clsnss+x2pltot:x2clsnss, 
+             data = comp.kndr,
+             family="binomial")
+
+vif(logit) #VIF checked for model accounting for conflict & without conflict
+
+logit <- glm.cluster(data= d, 
+                     formula=I(cat.atl=="High") ~ x1tchapp+x2kage_r+x2povty+kndr_par_ed+
+                       x1tchapp+x2prnapp+x2inbcnt+x2attnfs+
+                       a1yrstch+a1hghstd+
+                       x2pltot+x2cnflct+x2clsnss+x2pltot:x2clsnss, 
+                     cluster=d$s2_id,
+                     family="binomial")
+
+summary(logit)
+exp(coefficients(logit))
+pwr.f2.test(logit, u=14, f2= .3, sig.level = .05)
+
+pwrss.z.logistic(p0 = 0.15, p1 = 0.10, alpha = .05, power = .8, distribution = "binomial")
 

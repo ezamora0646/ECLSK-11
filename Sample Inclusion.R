@@ -44,10 +44,10 @@ sum(is.na(large.df$____)) #counts number of NAs in column; use for other variabl
 race2.sub <- subset(large.df, (x1firkdg == "1: YES") & (x_raceth_r %in% "3: HISPANIC, RACE SPECIFIED" | 
                                                 x_raceth_r %in% "4: HISPANIC, NO RACE SPECIFIED") &
                       (c1sphome %in% " 1: YES" | c2sphome %in% "1: YES" | c3sphome %in% "1: YES" | c4sphome %in% "1: YES"), 
-                    addAttributes = FALSE, omittedLevels = FALSE)
+                    addAttributes = TRUE, dropOmittedLevels = FALSE)
                #       c1spasmt %in% "1: YES" | c2spasmt %in% "1: YES" | c3spasmt %in% "1: YES" | c4spasmt %in% "1: YES")) #adds tested in spanish at one point; how to ID when student achieved proficiency 
-race2.sub <- subset(race2.sub, select= (-c(x4ktchapp,t4kennat,x4kclsnss,
-                                         x4kcnflct,x4ktchext,x4kinbcnt,x4kattnfs,t4kkeeps,t4kshows,t4kworks,t4kadapts,t4kpersis,t4katten,t4kfollow)))
+race2.sub <- subset(race2.sub, select= -c(x4ktchapp,t4kennat,x4kclsnss,
+                                         x4kcnflct,x4ktchext,x4kinbcnt,x4kattnfs,t4kkeeps,t4kshows,t4kworks,t4kadapts,t4kpersis,t4katten,t4kfollow))
 
 #race2.lang <- subset(large.df, (x1firkdg == "1: YES") &
                       #    (c1sphome %in% " 1: YES" | c2sphome %in% "1: YES" | c3sphome %in% "1: YES" | c4sphome %in% "1: YES" |
@@ -74,29 +74,33 @@ race2.sub <- subset(race2.sub, select= (-c(x4ktchapp,t4kennat,x4kclsnss,
 
 #OR statement inside one (), separate from &; don't use distributive operators
 
-kinder.atl <- subset(race2.sub, select= c(childid, s1_id, s2_id, x1kage_r, x2kage_r, x_chsex_r, x_hisp_r, x_raceth_r, x1locale, x2locale, x2inccat_i, x2povty, p1hig_1,
-                                          p2hig_1, x1pubpri, x2pubpri, x1firkdg, c1spasmt, c2spasmt, c1enghm, c2enghm, c1sphome, c2sphome, p1prmlng, p1prmln1, p1prmln2,
-                                          t2ennat, x1tchapp, x2tchapp, x1prnapp, x2prnapp, x2clsnss, x2cnflct, x1tchext, x2tchext, x1inbcnt, x2inbcnt, x1attnfs, x2attnfs,
-                                          x1plss, x2plss, x1plart, x2plart, x1pltot, x2pltot, t1keeps, t2keeps, t1shows, t2shows, t1works, t2works, t1adapts, t2adapts, 
-                                          t1persis, t2persis, t1atten, t2atten, t1follow, t2follow, t1class, t2nstnl, a2smlgrp, a2anonen, a2pnonen, a2dnonen, a1timdis, a1yrstch, 
-                                          a1yrsch, a1hghstd, a1early, a1esl, a1devlp, a1yrborn, a1highql, a1aspnin, a1pspnin, a1dspnin, a1atnoot, a1ptnoot, a1dtnoot, a1atspnh, a1ptspnh, a1dtspnh,
-                                          a1phisp, a1dhisp, a1acspnh, a1pcspnh, a1dcspnh, a1aell, a1pell, a1dell, a2aell, a2pell, a2dell, a1anmell, a1pnmell, a1dnmell, 
-                                          a1ahisp, a1phisp, a1dhisp), addAttributes = TRUE, omittedLevels = FALSE)
+kinder.atl <- getData(data=race2.sub, varnames = c("childid", "s1_id", "s2_id", "x1kage_r", "x2kage_r", "x_chsex_r", "x_hisp_r", "x_raceth_r", "x1locale", "x2locale", "x2inccat_i", "x2povty", "p1hig_1",
+                                          "p2hig_1", "x1pubpri", "x2pubpri", "x1firkdg", "c1spasmt", "c2spasmt", "c1enghm", "c2enghm", "c1sphome", "c2sphome", "p1prmlng", "p1prmln1", "p1prmln2",
+                                          "t2ennat", "x1tchapp", "x2tchapp", "x1prnapp", "x2prnapp", "x2clsnss", "x2cnflct", "x1tchext", "x2tchext", "x1inbcnt", "x2inbcnt", "x1attnfs", "x2attnfs",
+                                          "x1plss", "x2plss", "x1plart", "x2plart", "x1pltot", "x2pltot", "t1keeps", "t2keeps", "t1shows", "t2shows", "t1works", "t2works", "t1adapts", "t2adapts", 
+                                          "t1persis", "t2persis", "t1atten", "t2atten", "t1follow", "t2follow", "t1class", "t2nstnl", "a2smlgrp", "a2anonen", "a2pnonen", "a2dnonen", "a1timdis", "a1yrstch", 
+                                          "a1yrsch", "a1hghstd", "a1early", "a1esl", "a1devlp", "a1yrborn", "a1highql", "a1aspnin", "a1pspnin", "a1dspnin", "a1atnoot", "a1ptnoot", "a1dtnoot", "a1atspnh", "a1ptspnh", "a1dtspnh",
+                                          "a1phisp", "a1dhisp", "a1acspnh", "a1pcspnh", "a1dcspnh", "a1aell", "a1pell", "a1dell", "a2aell", "a2pell", "a2dell", "a1anmell", "a1pnmell", "a1dnmell", 
+                                          "a1ahisp", "a1phisp", "a1dhisp", "w12t0"), addAttributes = TRUE, dropOmittedLevels = FALSE)
 
-frst.atl <- subset(race2.sub, select= c(childid, s3_id, s4_id, x3age, x4age, x_chsex_r, x_hisp_r, x_raceth_r, x3locale, x4locale, x4inccat_i, x4povty_i, p4hig_1_i, x3pubpri, x4pubpri, c3spasmt, c4spasmt,
-                                        c3nenghm, c4nenghm, c3sphome, c4sphome, t4ennat, x3tchapp, x4tchapp, x4prnapp, x4clsnss, x4cnflct, x3tchext, x4tchext, x4inbcnt, x4attnfs, x3plss, x4plss, 
-                                        x3plart, x4plart, x3pltot, x4pltot, t3keeps, t4keeps, t3shows, t4shows, t3works, t4works, t3adapts, t4adapts, t3persis, t4persis, t3atten, t4atten, t3follow, t4follow,
-                                        a4wksgrp, a4noneng, a4nonin, a4dscptim, a4yrstch, a4yrsch, a4hghstd, a4early, a4esl, a4devlp, a4yrborn, a4highql, a4spnin, a4tnoot, a4tspnh, a4cspnh, a4ell, a4nmell, a4shisp))
+frst.atl <- getData(data=race2.sub, varnames = c("childid", "s3_id", "s4_id", "x3age", "x4age", "x_chsex_r", "x_hisp_r", "x_raceth_r", "x3locale", "x4locale", "x4inccat_i", "x4povty_i", "p4hig_1_i", "x3pubpri", "x4pubpri", "c3spasmt", "c4spasmt",
+                                        "c3nenghm", "c4nenghm", "c3sphome", "c4sphome", "t4ennat", "x3tchapp", "x4tchapp", "x4prnapp", "x4clsnss", "x4cnflct", "x3tchext", "x4tchext", "x4inbcnt", "x4attnfs", "x3plss", "x4plss", 
+                                        "x3plart", "x4plart", "x3pltot", "x4pltot", "t3keeps", "t3shows", "t4shows", "t3works", "t4works", "t3adapts", "t4adapts", "t3persis", "t4persis", "t3atten", "t4atten", "t3follow", "t4follow",
+                                        "a4wksgrp", "a4noneng", "a4nonin", "a4dscptim", "a4yrstch", "a4yrsch", "a4hghstd", "a4early", "a4esl", "a4devlp", "a4yrborn", "a4highql", "a4spnin", "a4tnoot", "a4tspnh", "a4cspnh", "a4ell", "a4nmell", "a4shisp", "w4cf4p20"), 
+                    addAttributes = TRUE, dropOmittedLevels = FALSE)
 
-dll.atl.kndr <- subset(kinder.atl, select= c(childid, s2_id, x2kage_r, x_chsex_r, x2povty, kndr_par_ed, x2locale, x2pubpri,x2tchapp, x1tchapp, x2pltot, x2clsnss, x2cnflct, x2prnapp, x2inbcnt, x2attnfs, x2tchext, a1yrstch, a1yrborn, a1hghstd))
+dll.atl.kndr <- getData(data=kinder.atl, varnames= c("childid", "s2_id", "x2kage_r", "x_chsex_r", "x2povty", "x2locale", "x2pubpri", "x2tchapp", "x1tchapp", "x1pltot" , "x2pltot", "x2clsnss", "x2cnflct", "x1prnapp", "x2prnapp", "x1inbcnt", "x2inbcnt", "x1attnfs", "x2attnfs", "x2tchext", "a1yrstch", "a1yrborn", "a1hghstd", "w12t0"),
+                        addAttributes = TRUE, dropOmittedLevels = FALSE)
 #final kinder dataset with significant predictors (w least NAs)
 
 comp.dll.kndr <- na.omit(dll.atl.kndr)
 
 
-dll.atl.frst <- subset(frst.atl, select= c(childid, x4age, x_chsex_r, x4povty_i, fst_par_ed, x4tchapp, x3tchapp, x4clsnss, x4cnflct, x4prnapp, x4attnfs, x4inbcnt, x4tchext, a4yrstch, a4yrborn,a4hghstd))
+dll.atl.frst <- getData(frst.atl, varnames = c("childid", "s4_id", "x4locale", "x4age", "x_chsex_r", "x4povty_i", "p4hig_1_i","x4tchapp", "x3tchapp", "x4clsnss", "x4cnflct", "x4prnapp", "x4attnfs", "x4inbcnt", "x4tchext", "a4yrstch", "a4yrborn", "a4hghstd", "w4cf4p20"), addAttributes = TRUE, dropOmittedLevels = FALSE)
 #final first grade dataset with significant predictors (one's with least NAs)  
   
+dll.atl.frst <- c(frst.atl$s4_id, frst.atl$x4locale)
+
 #power analysis
 ##### Missing Values Investigation #####
 miss.var <- miss_var_summary(dll.atl.kndr) #na summary as df 
