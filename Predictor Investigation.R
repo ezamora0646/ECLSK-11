@@ -1,10 +1,14 @@
 ######## #replacing -9 with NA - prep for imputation #####
-occurrences <- sapply(dll.atl.kndr, function(col) sum(col == "-9: NOT ASCERTAINED"))
+occurrences <- sapply(comp.fst, function(col) sum(col == "-9: NOT ASCERTAINED"))
 print(occurrences)
 
 dll.atl.frst$x_chsex_r[dll.atl.frst$x_chsex_r == "-9: NOT ASCERTAINED"] <- NA
 dll.atl.frst$x_chsex_r <- droplevels(dll.atl.frst$x_chsex_r)
 
+dll.atl.frst$x4locale <- droplevels(dll.atl.frst$x4locale) #-9 still not being removed
+dll.atl.frst$x4locale <- factor(dll.atl.frst$x4locale, exclude = NA)
+
+dll.atl.frst$p4hig_1_i <- factor(dll.atl.frst$p4hig_1_i, exclude = NA)
 
 occurrences <- sapply(dll.atl.kndr, function(col) sum(col == "-9: NOT ASCERTAINED"))
 print(occurrences)
@@ -34,9 +38,11 @@ ggplot(dll.atl.kndr, aes(x=x2tchapp)) +
 table(dll.atl.kndr$x2tchapp >= Q3, useNA = "ifany") # 353 students with high ATL, 906 low ATL 
 
 #binary outcome variable 
-dll.atl.kndr <- dll.atl.kndr %>% mutate(cat.atl = factor(if_else(x2tchapp>=Q3,1,0, missing=NULL),
-                                                         levels = c(0,1),
-                                                         labels = c("Low", "High")))
+dll.atl.kndr <- dll.atl.kndr %>%
+  mutate(cat.atl = factor(if_else(x2tchapp >= Q3, 1, 0, missing = NULL),
+                          levels = c(0,1),
+                          labels = c("Low", "High")))
+
 table(dll.atl.kndr$cat.atl, useNA = "ifany")
 
 # first grade ATL recoding 
@@ -55,9 +61,10 @@ ggplot(dll.atl.frst, aes(x=x4tchapp)) +
 table(dll.atl.frst$x4tchapp >= fst.q3, useNA = "ifany")
 
 #binary outcome variable 1st grade atl 
-dll.atl.frst <- dll.atl.frst %>% mutate(fst.cat.atl = factor(if_else(x4tchapp>=fst.q3,1,0, missing=NULL),
-                                                             levels = c(0,1),
-                                                             labels = c("Low", "High")))
+dll.atl.frst <- dll.atl.frst %>% mutate(fst.cat.atl = factor(if_else(x4tchapp>=fst.q3,1,0, missing=NULL)))
+                                                            # levels = c(0,1),
+                                                             #labels = c("Low", "High")))
+
 table(dll.atl.frst$fst.cat.atl, useNA = "ifany")
 
 #check correlation kinder and 1st categorical variable 
@@ -180,32 +187,58 @@ frst.atl <- recode.sdf(frst.atl, recode = list(
 
 
 
-table(frst.atl$p4hig_1_i, useNA = "ifany")
+dll.atl.frst <- dll.atl.frst[,!names(dll.atl.frst) %in% "p4hig_1_i"]
+
 
 #dply syntax not compatible with EdSurvey light objexts
-#frst.atl<- frst.atl %>%
-  #mutate(fst_par_ed = recode(p4hig_1_i, 
-                   #          "-1: NOT APPLICABLE" = "0",
-                  #           "7: 7TH GRADE OR LESS"  = "11",                                               
-                 #           "8: 8TH GRADE"  = "11",                                                       
-                #             "10: 10TH GRADE"  = "11",                                                     
-              #              "11: 11TH GRADE"  = "11",                                                     
-             #               "12: 12TH GRADE BUT NO DIPLOMA" = "11", 
-            #                 "13: HIGH SCHOOL EQUIVALENT/GED" = "12",                                     
-           #                    "14: HIGH SCHOOL DIPLOMA" = "12",
-           #                  "15: VOC/TECH PROGRAM AFTER HIGH SCHOOL BUT NO VOC/TECH DIPLOMA" = "13",     
-          #                     "16: VOC/TECH PROGRAM AFTER HIGH SCHOOL DIPLOMA" = "13",                     
-         #                   "17: SOME COLLEGE BUT NO DEGREE"= "13", 
-        #                    "18: ASSOCIATE'S DEGREE" = "13",
-       #                      "19: BACHELOR'S DEGREE" = "14", 
-      #                       "20: GRADUATE OR PROFESSIONAL SCHOOL BUT NO DEGREE" = "15",                  
-     #                          "21: MASTER'S (MA MS)" = "15",                                               
-    #                           "22: DOCTORATE DEGREE (PHD EDD)" = "15",                                     
-   #                            "23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB)" = "15", 
-  #                          .default = NULL
- #                            ))
-#frst.atl$fst_par_ed <- factor(frst.atl$fst_par_ed, labels = c("Less than HS", "HS or equiv", 
-                                                              "Voc/AA: degree or no degree", "Bachelors", "Grad or prof school", "Not applicable"), ordered = TRUE)
+frst.atl$p4hig_1_i <- race2.sub$p4hig_1_i
+
+temp.fst <- frst.atl["p4hig_1_i"]
+
+temp.fst<- temp.fst %>%
+  mutate(fst.par.ed = case_when(
+    p4hig_1_i == "-1: NOT APPLICABLE" ~ 11,
+    p4hig_1_i == "7: 7TH GRADE OR LESS"  ~ 11,                                               
+    p4hig_1_i == "8: 8TH GRADE"  ~ 11,
+    p4hig_1_i == "9: 9TH GRADE" ~ 11,
+    p4hig_1_i == "10: 10TH GRADE"  ~ 11,                                                     
+    p4hig_1_i == "11: 11TH GRADE"  ~ 11,                                                     
+    p4hig_1_i == "12: 12TH GRADE BUT NO DIPLOMA" ~ 11, 
+    p4hig_1_i == "13: HIGH SCHOOL EQUIVALENT/GED" ~ 12,                                     
+    p4hig_1_i == "14: HIGH SCHOOL DIPLOMA" ~ 12,
+    p4hig_1_i == "15: VOC/TECH PROGRAM AFTER HIGH SCHOOL BUT NO VOC/TECH DIPLOMA" ~ 13,     
+    p4hig_1_i == "16: VOC/TECH PROGRAM AFTER HIGH SCHOOL DIPLOMA" ~ 13,                     
+    p4hig_1_i == "17: SOME COLLEGE BUT NO DEGREE" ~ 13, 
+    p4hig_1_i =="18: ASSOCIATE'S DEGREE" ~ 13,
+    p4hig_1_i == "19: BACHELOR'S DEGREE" ~ 14, 
+    p4hig_1_i == "20: GRADUATE OR PROFESSIONAL SCHOOL BUT NO DEGREE" ~ 14,                  
+    p4hig_1_i == "21: MASTER'S (MA MS)" ~ 14,                                               
+    p4hig_1_i == "22: DOCTORATE DEGREE (PHD EDD)" ~ 14,                                     
+    p4hig_1_i == "23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB)" ~ 14, 
+                            .default = NULL
+                            ))
+temp.fst$fst.par.ed <- factor(temp.fst$fst.par.ed, levels= c(11, 12, 13, 14),
+                              labels = c("Less than HS", "HS or equiv", "Some College", "Bachelors + Beyond"), ordered = TRUE)
+
+
+frst.atl$fst.par.ed <- temp.fst$fst.par.ed
+
+dll.atl.frst$fst.par.ed <- temp.fst$fst.par.ed
+
+
+temp.fst <- temp.fst %>%
+  mutate(fst.par.ed = case_when(
+    fst.par.ed == "Some College" ~ "Beyond HS",
+    fst.par.ed == "Bachelors + Beyond" ~ "Beyond HS",
+    TRUE ~ as.character(fst.par.ed)  # Keep other categories unchanged
+  ))
+temp.fst$fst.par.ed <- factor(temp.fst$fst.par.ed,
+                                   levels = c("Less than HS", "HS or equiv", "Beyond HS"),
+                                   ordered = TRUE)
+table(temp.fst)
+
+comp.fst$fst.par.ed <- temp.comp.fst$fst.par.ed
+
  
 frst.tch.covars <- frst.atl[, c("x4tchapp", "a4nmell", "a4shisp", "a4yrsch", "a4yrstch", "a4wksgrp", "a4dscptim", "a4hghstd", 
                                 "a4early", "a4esl", "a4devlp", "a4yrborn", "a4highql", "a4spnin", "a4ell")]
@@ -286,6 +319,55 @@ kinder.atl <- recode.sdf(kinder.atl, recode = list(
 ))
 
 
+attributes(kinder.atl$p1hig_1)
+attributes(new.comp.kndr$p1hig_1)
+attributes(comp.kndr$p1hig_1)
+
+
+table(dll.atl.kndr$p1hig_1, useNA = "ifany")
+table(as.numeric(dll.atl.kndr$p1hig_1), useNA = "ifany")
+
+table(comp.kndr$p1hig_1, useNA = "ifany")
+table(kinder.atl$p1hig_1, useNA = "ifany")
+table(new.comp.kndr$p1hig_1, useNA = "ifany")
+table(as.numeric(temp.k$par.ed.k), useNA = "ifany")
+table(temp.k$par.ed.k, useNA = "ifany")
+
+
+
+a1 <- c(1, 11, 12, 13, 14, 15)
+a2 <- c("Not Applicable", "Less than HS", "HS or equiv", "Some College: Voc/AA", "Bachelors", "Grad or prof school")
+
+temp.k <- kinder.atl["p1hig_1"]
+temp.k <- temp.k %>% 
+  mutate(par.ed.k = case_when(
+    p1hig_1 == "Not Applicable" ~ 11, 
+    p1hig_1 == "Less than HS" ~ 11, 
+    p1hig_1 == "HS or equiv" ~ 12, 
+    p1hig_1 == "Some College: Voc/AA" ~ 13, 
+    p1hig_1 == "Bachelors" ~ 14, 
+    p1hig_1 == "Grad or prof school" ~ 14, 
+    TRUE ~ NA_real_  # Handle any other/missing values
+  ))
+
+temp.k$par.ed.k <- factor(temp.k$par.ed.k, 
+                          levels =c(11, 12, 13, 14), 
+                          labels = c("Less than HS", "HS or equiv", 
+                                     "Some College: Voc/AA", "Bachelors + Beyond"),
+                          ordered=T)
+
+dll.atl.kndr$par.ed.k <- temp.k$par.ed.k
+table(dll.atl.kndr$par.ed.k, useNA = "ifany")
+
+str(temp.k$par.ed.k)
+attributes(temp.k$par.ed.k)
+
+
+
+
+
+
+
 table(kinder.atl$p1hig_1, useNA = "ifany")
 
 kinder.atl <- kinder.atl %>% 
@@ -293,7 +375,7 @@ kinder.atl <- kinder.atl %>%
                               "-7: REFUSED" = NA_character_,                                                        
                               "-8: DON'T KNOW" = NA_character_,                                                     
                               "-9: NOT ASCERTAINED" = NA_character_,
-                              "-1: NOT APPLICABLE" = "-1",
+                              "-1: NOT APPLICABLE" = "1",
                               "7: 7TH GRADE OR LESS"  = "11",                                               
                               "8: 8TH GRADE"  = "11",                                                       
                               "9: 9TH GRADE"  = "11",                                                       
@@ -314,52 +396,8 @@ kinder.atl <- kinder.atl %>%
                               .default = NULL
                               ))
 
-kinder.atl$kndr_par_ed <- factor(kinder.atl$kndr_par_ed, labels = c("Less than HS", "HS or equiv", 
+kinder.atl$kndr_par_ed <- factor(kinder.atl$kndr_par_ed, labels = c("Not Applicable","Less than HS", "HS or equiv", 
                                        "Voc/AA: degree or no degree", "Bachelors", "Grad or prof school"), ordered = TRUE)
-
-
-7: 7TH GRADE OR LESS 
-259 
-8: 8TH GRADE 
-48 
-9: 9TH GRADE 
-124 
-10: 10TH GRADE 
-48 
-11: 11TH GRADE 
-63 
-12: 12TH GRADE BUT NO DIPLOMA 
-69 
-13: HIGH SCHOOL DIPLOMA/EQUIVALENT 
-25 
-14: HIGH SCHOOL DIPLOMA 
-188 
-15: VOC/TECH PROG AFTER HIGH SCHOOL NO DIPLOMA 
-14 
-16: VOC/TECH PROGRAM AFTER HIGH SCHOOL 
-30 
-17: SOME COLLEGE BUT NO DEGREE 
-73 
-18: ASSOCIATE'S DEGREE 
-                                                                 18 
-                                              19: BACHELOR'S DEGREE 
-33 
-20: GRADUATE/PROFESSIONAL SCHOOL - NO DEGREE 
-2 
-21: MASTER'S DEGREE (MA, MS) 
-                                                                 11 
-                                22: DOCTORATE DEGREE (PH.D., ED.D.) 
-                                                                  2 
-23: PROFESSIONAL DEGREE AFTER BACHELOR'S DEGREE (MD/DDS/LAW/JD/LLB) 
-2 
--7: REFUSED 
-6 
--8: DONT KNOW 
-                                                                  4 
-                                                -9: NOT ASCERTAINED 
-                                                                 11 
-                                                               <NA> 
-                                                                374 
 
 
 

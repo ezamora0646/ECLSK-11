@@ -89,8 +89,10 @@ frst.atl <- getData(data=race2.sub, varnames = c("childid", "s3_id", "s4_id", "x
                                         "a4wksgrp", "a4noneng", "a4nonin", "a4dscptim", "a4yrstch", "a4yrsch", "a4hghstd", "a4early", "a4esl", "a4devlp", "a4yrborn", "a4highql", "a4spnin", "a4tnoot", "a4tspnh", "a4cspnh", "a4ell", "a4nmell", "a4shisp", "w4cf4p20"), 
                     addAttributes = TRUE, dropOmittedLevels = FALSE)
 
-dll.atl.kndr <- getData(data=kinder.atl, varnames= c("childid", "s2_id", "x2kage_r", "x_chsex_r", "x2povty", "x2locale", "x2pubpri", "x2tchapp", "x1tchapp", "x1pltot" , "x2pltot", "x2clsnss", "x2cnflct", "x1prnapp", "x2prnapp", "x1inbcnt", "x2inbcnt", "x1attnfs", "x2attnfs", "x2tchext", "a1yrstch", "a1yrborn", "a1hghstd", "w12t0"),
+dll.atl.kndr <- getData(data=kinder.atl, varnames= c("childid", "s2_id", "x2kage_r", "x_chsex_r", "x2povty", "p1hig_1","x2locale", "x2pubpri", "x2tchapp", "x1tchapp", "x1pltot" , "x2pltot", "x2clsnss", "x2cnflct", "x1prnapp", "x2prnapp", "x1inbcnt", "x2inbcnt", "x1attnfs", "x2attnfs", "x2tchext", "a1yrstch", "a1yrborn", "a1hghstd", "w12t0"),
                         addAttributes = TRUE, dropOmittedLevels = FALSE)
+
+
 #final kinder dataset with significant predictors (w least NAs)
 
 comp.dll.kndr <- na.omit(dll.atl.kndr)
