@@ -419,6 +419,113 @@ exp(coef(fst.cnflct.model))
 exp(confint(fst.cnflct.model))
 ```
 
+NEW first grade models: Longitudinal / Kinder Controls
+
+Variable prep:
+
+```{r}
+longi.comp.fst <- longi.comp.fst %>%
+  mutate(frst.prof = case_when(
+    frst.prof == "In 1st" ~ "After K",
+    frst.prof == "After 1st" ~ "After K",
+    TRUE ~ as.character(frst.prof)  # Keep other categories unchanged
+  ))
+longi.comp.fst$frst.prof <- factor(longi.comp.fst$frst.prof,
+                                   levels = c("In K", "After K"))
+table(longi.comp.fst$frst.prof)
+
+
+longi.comp.fst <- longi.comp.fst %>%
+  mutate(fst.par.ed = case_when(
+    fst.par.ed == "HS or equiv" ~ "HS +",
+    fst.par.ed == "Beyond HS" ~ "HS +",
+    TRUE ~ as.character(fst.par.ed)  # Keep other categories unchanged
+  ))
+longi.comp.fst$fst.par.ed <- factor(longi.comp.fst$fst.par.ed,
+                                   levels = c("Less than HS", "HS +"), ordered=T)
+table(longi.comp.fst$fst.par.ed)
+
+
+fst.des <- svydesign(ids = ~s4_id, data = longi.comp.fst, weights = ~w4cf4p20, nest = T)
+fst.rep.des <- as.svrepdesign(fst.des, repweights= "w4cf4p20[1-9]+", type = "JK1", combined.weights = T, return.replicates=F)
+
+longi.comp.fst$scale_clsnss <- scale(longi.comp.fst$x4clsnss, scale = F)
+longi.comp.fst$scale_cnflct <- scale(longi.comp.fst$x4cnflct, scale = F)
+```
+
+Models: RUN 11/10
+
+```{r}
+#base closeness model
+longi.base <- glm(data= longi.comp.fst, 
+                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
+                           x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
+                           a4yrstch + 
+                           frst.prof + x4cnflct + frst.prof*scale(x4clsnss, scale = F),
+                   family = "quasibinomial")
+summary(longi.base)
+exp(coefficients(longi.base))
+exp(confint(longi.base))
+
+#base conflict
+longi.cnflct <- glm(data= longi.comp.fst, 
+                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
+                           x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
+                           a4yrstch + 
+                           frst.prof + x4clsnss + frst.prof*scale(x4clsnss, scale = F),
+                   family = "quasibinomial")
+summary(longi.cnflct)
+exp(coefficients(longi.cnflct))
+exp(confint(longi.cnflct))
+
+
+#closeness sampling wght
+longi.wght <- svyglm(data= longi.comp.fst, 
+                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
+                           x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
+                           a4yrstch + 
+                           frst.prof + x4cnflct + frst.prof*scale_clsnss,
+                   design = fst.rep.des, family = "quasibinomial")
+summary(longi.wght)
+exp(coefficients(longi.wght))
+exp(confint(longi.wght))
+
+#cnflict sampling wght
+cnflct.wght <- svyglm(data= longi.comp.fst, 
+                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
+                           x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
+                           a4yrstch + 
+                           frst.prof + x4clsnss + frst.prof*scale_cnflct,
+                   design = fst.rep.des, family = "quasibinomial")
+summary(cnflct.wght)
+exp(coefficients(cnflct.wght))
+exp(confint(cnflct.wght))
+
+
+#closness replicate wght
+longi.rep.wght <- svyglm(data= longi.comp.fst, 
+                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
+                           x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
+                           a4yrstch + 
+                           frst.prof + x4cnflct + frst.prof*scale_clsnss,
+                   design = fst.rep.des, family = "quasibinomial")
+summary(longi.rep.wght)
+exp(coefficients(longi.rep.wght))
+exp(confint(longi.rep.wght))
+
+#cnflct rep wght 
+cnflct.rep <- svyglm(data= longi.comp.fst, 
+                   formula = fst.cat.atl ~ x4age + x_chsex_r +
+                     x4povty_i+ fst.par.ed+ x2tchapp + x4prnapp +
+                     x2inbcnt + x2attnfs +
+                     a4yrstch + 
+                     frst.prof + x4clsnss + frst.prof*scale_cnflct,
+                   design = fst.rep.des, family = "quasibinomial")
+summary(cnflct.rep)
+exp(coefficients(cnflct.rep))
+exp(confint(cnflct.rep))
+```
+
 KINDER NEW Approach for Imputation + Complex Survey Design
 
 ```{r}
@@ -569,7 +676,21 @@ summary(fst.v2.imp)
 
 ```
 
-ReRUN results with scaled variables
+Longitudinal Analysis w Imputation 11/9
+
+```{r}
+longi <- longi.fst[,c("s4_id","x4age", "x_chsex_r", "x4povty_i", "fst.par.ed","a4yrstch", "fst.cat.atl", "frst.prof", "x4clsnss", "x4cnflct", "x4prnapp","x2tchapp", "x2inbcnt", "x2attnfs")]
+longi.fst$x_chsex_r[longi.fst$x_chsex_r == -9] <- NA
+longi.fst$x_chsex_r <- factor(longi.fst$x_chsex_r)
+longi <- as.data.frame(longi)
+
+ltype <- c(-2, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1)
+
+longi.imp <- mitml::jomoImpute(data = longi, type = ltype, seed = 805, n.iter=5000, m = 10, n.burn = 10000)
+
+```
+
+ReRUN results with scaled variables TO DO November
 
 ```{r}
 frst.full <- mitmlComplete(fst.v2.imp)
