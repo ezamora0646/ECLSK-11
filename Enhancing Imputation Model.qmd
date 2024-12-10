@@ -202,64 +202,76 @@ exp(coefficients(k.cnflct.mdl))
 exp(confint(k.cnflct.mdl))
 ```
 
-First Grade Model Building
+
+First Grade Model Building - NEED TO BE REFITTED WITH LONGI CONTROLS AND ADDED TO SPREADSHEET 12/5
+
+need to change maximal and check svydes object
 
 ```{r}
-null <- svyglm(data = wght.comp.fst, formula= fst.cat.atl ~1, design = fst.rep.des ,family = "quasibinomial")
+null <- svyglm(data = fst.wght.mdl, formula= fst.cat.atl ~1, design = fst.des ,family = "quasibinomial")
 
-block.1 <- svyglm(data=wght.comp.fst,
+block.1 <- svyglm(data=fst.wght.mdl,
                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed,
-                  design = fst.rep.des, family = "quasibinomial")
+                  design = fst.des, family = "quasibinomial")
 AIC(block.1)
-BIC(block.1, maximal = fst.comp.model)
+BIC(block.1, maximal = fst.wght.mdl)
 anova(null, block.1, method="Wald", test = "Chisq")
 anova(null, block.1)
 summary(block.1)$deviance
 
 block.2 <- svyglm(data = wght.comp.fst, 
                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
-                  x3tchapp+ x4prnapp + x4inbcnt + x4attnfs,
-                       design = fst.rep.des, family = "quasibinomial")
+                  x2tchapp+ x4prnapp + x2inbcnt + x2attnfs,
+                       design = fst.des, family = "quasibinomial")
+
 anova(null, block.2, method="Wald", test = "Chisq")
 anova(null, block.2)
 anova(block.1, block.2)
 AIC(block.2)
-BIC(block.2, maximal = fst.comp.model)
+
+BIC(block.2, maximal = fst.wght.mdl)
 summary(block.2)$deviance
 
 
-block.3 <- svyglm(data=wght.comp.fst, 
+block.3 <- svyglm(data=fst.wght.mdl, 
                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed + 
-                    x3tchapp+x4prnapp + x4inbcnt + x4attnfs + 
-                    a4yrstch + a4hghstd 
-                           ,design = fst.rep.des, family = "quasibinomial")
+                    x2tchapp+x4prnapp + x2inbcnt + x2attnfs + 
+                    a4yrstch 
+                           ,design = fst.des, family = "quasibinomial")
+
 anova(block.2, block.3) # teacher covars are signifcant improvements to model... maybe bc of sample size differences
 anova(null, block.3, method = "Wald", test = "Chisq") #specify WALD or LR for different model evals
 anova(null, block.3)
 AIC(block.3)
-BIC(block.3, maximal = fst.comp.model)
+BIC(block.3, maximal = fst.wght.mdl)
 summary(block.3)$deviance
 
-block.4 <- svyglm(data=wght.comp.fst,
+
+block.4 <- svyglm(data=fst.wght.mdl,
   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed 
-  +x3tchapp+ x4prnapp + x4inbcnt + x4attnfs + 
-    a4yrstch + a4hghstd + 
-    frst.prof + x4clsnss + x4cnflct,
-                         design = fst.rep.des, family = "quasibinomial")
+  +x2tchapp+ x4prnapp + x2inbcnt + x2attnfs + 
+    a4yrstch + 
+    frst.prof + x4cnflct,
+                         design = fst.des, family = "quasibinomial")
+
 anova(block.3, block.4)
 anova(null, block.4)
 anova(null, block.4, method="Wald", test= "Chisq")
 AIC(block.4)
+<<<<<<< HEAD
 BIC(block.4, maximal = fst.comp.model)
 summary(block.4)$deviance
 
-anova(block.4, fst.comp.model)#full model already made in chunk below
+BIC(block.4, maximal = fst.wght.mdl)
+summary(block.4)$deviance
+
+anova(block.4, fst.wght.mdl)#full model already made in chunk below
 #addition of interaction term does not significantly improve model but is of scientific interest
-anova(null, fst.comp.model)
-anova(null, fst.comp.model, method = "Wald", test="Chisq")
-AIC(fst.comp.model)
-BIC(fst.comp.model, maximal = fst.comp.model)
-summary(fst.comp.model)$deviance
+anova(null, fst.wght.mdl)
+anova(null, fst.wght.mdl, method = "Wald", test="Chisq")
+AIC(fst.wght.mdl)
+BIC(fst.wght.mdl, maximal = fst.wght.mdl)
+summary(fst.wght.mdl)$deviance
 
 svyscoretest(block.3, add.terms = ~factor(frst.prof) , "individual")
 
@@ -343,21 +355,25 @@ wght.comp.fst$x4clsnss_scaled <- scale(wght.comp.fst$x4clsnss, scale = F)
 
 ```
 
-Base model no Sampling Weight No clustered SE
+Base model no Sampling Weight No clustered SE...
+
+longi updated and added to results spreadsheet 12/4
 
 ```{r}
 
 #if schools where even dist... using glmer random slopes, multilevel model
-
-bse.fst.mdl <- glm(data= comp.fst, 
+ 
+#LONGI CONTROLS ADDED 12/4... ADDED TO SPREADSHEET
+bse.fst.mdl <- glm(data= longi.comp.fst, 
                    formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
-                           x3tchapp + x4prnapp + x4inbcnt + x4attnfs + 
+                           x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
                            a4yrstch + 
                            frst.prof + x4cnflct + frst.prof*scale(x4clsnss, scale = F),
                    family = "quasibinomial") #scaling directly in formula only works for glm function... 
 #wrapping scale in svyglm creates object w scaled values, that is NOT in svydesign object 
 
-summary(bse.fst.mdl) #n=418
+
+summary(bse.fst.mdl) #n=423
 exp(coefficients(bse.fst.mdl))
 exp(confint(bse.fst.mdl))
 
@@ -366,18 +382,22 @@ exp(confint(bse.fst.mdl))
 
 ```
 
-First grade SW Closeness full model
+
+First grade SW Closeness full model... no rep weights in longi df
+
+added to spreadsheet 12/4
 
 ```{r}
-fst.des <- svydesign(ids = ~s4_id, data = wght.comp.fst, weights = ~w4cf4p20, nest = T) # sampling weight cannot have missing values... what to do for imputed data set? will it cause issues if observation # does not match??
+fst.des <- svydesign(ids = ~s4_id, data = longi.comp.fst, weights = ~w4cf4p20, nest = T) # sampling weight cannot have missing values... what to do for imputed data set? will it cause issues if observation # does not match??
 
-fst.rep.des <- as.svrepdesign(fst.des, repweights= "w4cf4p20[1-9]+", type = "JK1", combined.weights = T, return.replicates=F)
+#longi.df does not have rep weights
+#fst.rep.des <- as.svrepdesign(fst.des, repweights= "w4cf4p20[1-9]+", type = "JK1", combined.weights = T, return.replicates=F)
 
-fst.wght.mdl <- svyglm(data=wght.comp.fst,
+fst.wght.mdl <- svyglm(data=longi.comp.fst,
                        formula=fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed + 
-                           x3tchapp +x4prnapp + x4inbcnt + x4attnfs + 
+                           x2tchapp +x4prnapp + x2inbcnt + x2attnfs + 
                            a4yrstch + 
-                           frst.prof + x4cnflct + frst.prof*x4clsnss_scaled,
+                           frst.prof + x4cnflct + frst.prof*clsnss_scaked,
                        design = fst.des, family = "quasibinomial")
 summary(fst.wght.mdl)
 exp(coefficients(fst.wght.mdl))
@@ -386,38 +406,30 @@ exp(confint(fst.wght.mdl))
 #center closeness arouynd mean 
 #quasi gives probability changes... switch other models
 
-
-fst.comp.model <- svyglm(data = wght.comp.fst, 
-                         formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed + 
-                           x3tchapp +x4prnapp + x4inbcnt + x4attnfs + 
-                           a4yrstch + 
-                           frst.prof + x4cnflct + frst.prof*x4clsnss_scaled,
-                         design = fst.rep.des, family = "quasibinomial")
-
-
-summary(fst.comp.model)
-exp(coefficients(fst.comp.model))
-exp(confint(fst.comp.model))
 ```
 
 First grade SW Conflict
 
 make eng.prog ordered factor and Rerun ALL FIRST GRADE models 10/25
 
-```{r}
-wght.comp.fst$cnflct_scaled <- scale(wght.comp.fst$x4cnflct, scale = F)
+conflict added to spreadsheet 12/5
 
-fst.cnflct.model <- svyglm(data = wght.comp.fst, 
+```{r}
+#from old approach... not used in longi (see longi var prep file)
+#wght.comp.fst$cnflct_scaled <- scale(wght.comp.fst$x4cnflct, scale = F)
+
+fst.cnflct.model <- svyglm(data = longi.comp.fst, 
                          formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed + 
-                           x3tchapp +x4prnapp + x4inbcnt + x4attnfs + 
+                           x2tchapp +x4prnapp + x2inbcnt + x2attnfs + 
                            a4yrstch + 
                            frst.prof + x4clsnss + frst.prof*cnflct_scaled,
-                         design = fst.rep.des, family = "quasibinomial")
+                         design = fst.des, family = "quasibinomial")
 
 summary(fst.cnflct.model)
 exp(coef(fst.cnflct.model))
 exp(confint(fst.cnflct.model))
 ```
+
 
 NEW first grade models: Longitudinal / Kinder Controls
 
@@ -525,6 +537,7 @@ summary(cnflct.rep)
 exp(coefficients(cnflct.rep))
 exp(confint(cnflct.rep))
 ```
+
 
 KINDER NEW Approach for Imputation + Complex Survey Design
 
@@ -646,13 +659,17 @@ First Grade Results w IMPUTATION - Clustered SE, No sampling weight
 
 RE run imputation with scaled variables, try n.iter 5000? 10/25
 
+
+OLD imp object... non longi controls
+
 ```{r}
-bse.fst.mdl <- glm(data= comp.fst, 
-                   formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
-                           x3tchapp + x4prnapp + x4inbcnt + x4attnfs + 
-                           a4yrstch + 
-                           frst.prof + x4cnflct + frst.prof*scale(x4clsnss, scale = F),
-                   family = "quasibinomial")
+#pasted to get list of vars in non longi formula
+#bse.fst.mdl <- glm(data= comp.fst, 
+ #                  formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed+
+  #                         x3tchapp + x4prnapp + x4inbcnt + x4attnfs + 
+   #                        a4yrstch + 
+    #                       frst.prof + x4cnflct + frst.prof*scale(x4clsnss, scale = F),
+     #              family = "quasibinomial")
 
 
 df <- dll.atl.frst[,c("s4_id","x4age", "x_chsex_r", "x4povty_i", "fst.par.ed", 
@@ -675,6 +692,7 @@ plot.mitml(fst.v2.imp)
 summary(fst.v2.imp)
 
 ```
+
 
 Longitudinal Analysis w Imputation 11/9
 
@@ -704,11 +722,32 @@ frst.mdl <- with(fst.imp.des, svyglm(
     a4yrstch + 
     frst.prof + x4cnflct + frst.prof*x4clsnss, family = "quasibinomial"))
 
+ReRUN results with scaled variables
+
+longi controls added and in spreadsheet 12/4
+
+```{r}
+longi.full <- mitmlComplete(longi.imp)
+longi.full <- mitools::imputationList(longi.full)
+
+fst.imp.des <- svydesign(ids = ~s4_id, data = longi.full)
+
+frst.mdl <- with(fst.imp.des, svyglm(
+  formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed + 
+    x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
+    a4yrstch + 
+    frst.prof + x4cnflct + frst.prof*clsnss_scaled, family = "quasibinomial"))
+>>>>>>> main
+
 fst.pool.rslt <- testEstimates(frst.mdl) #has p values
 
 fst.pool.OR <- MIcombine(frst.mdl)
 fst.pool.OR <- summary(fst.pool.OR) #has lower and upper limit of pooled point estimate
 ```
+
+
+LONGI OR + CI FOR OR ADDED TO SPREADSHEET 12/5
+
 
 ```{r}
 log_odds <- fst.pool.OR$results  # pooled log-odds estimates
@@ -730,4 +769,45 @@ odds_ratios_df <- data.frame(
 
 # View the odds ratios and confidence intervals
 print(odds_ratios_df)
+```
+
+
+LONGI CONFLICT MODEL 12/5... added to spreadsheet
+
+```{r}
+#creating conflict model
+frst.cnflct <- with(fst.imp.des, svyglm(
+  formula = fst.cat.atl ~ x4age + x_chsex_r + x4povty_i+ fst.par.ed + 
+    x2tchapp + x4prnapp + x2inbcnt + x2attnfs + 
+    a4yrstch + 
+    frst.prof + x4clsnss + frst.prof*cnflct_scaled, family = "quasibinomial"))
+
+
+#pooling results 
+fst.con.rslt <- testEstimates(frst.cnflct) #has p values
+
+fst.con.OR <- MIcombine(frst.cnflct)
+fst.con.OR <- summary(fst.con.OR) #has lower and upper limit of pooled point estimate
+
+
+#getting pooled log odds + CI
+con_log_odds <- fst.con.OR$results  # pooled log-odds estimates
+con_lower_log_odds <- fst.con.OR$`(lower`  # lower bounds of CI on log-odds scale
+con_upper_log_odds <- fst.con.OR$`upper)`  # upper bounds of CI on log-odds scale
+
+# 2. Exponentiate to get the odds ratio and the CI for the odds ratio
+con_odds_ratios <- exp(con_log_odds)  # odds ratio from log-odds
+con_ci_lower <- exp(con_lower_log_odds)  # lower bound of the odds ratio CI
+con_ci_upper <- exp(con_upper_log_odds)  # upper bound of the odds ratio CI
+
+# 3. Create a data frame to present results clearly
+con_odds_ratios_df <- data.frame(
+  Predictor = rownames(fst.con.OR),
+  Odds_Ratio = con_odds_ratios,
+  CI_Lower = con_ci_lower,
+  CI_Upper = con_ci_upper
+)
+
+# View the odds ratios and confidence intervals
+print(con_odds_ratios_df)
 ```
