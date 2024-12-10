@@ -21,29 +21,34 @@ showWeights(data = eclsk11, verbose = TRUE) #once survey weight is selected, spe
 main_df <- getData(data = eclsk11, varnames = colnames(eclsk11), addAttributes = TRUE, omittedLevels = FALSE) #takes data from ed.survey list to traditional R df
 large.df <- getData(data = eclsk11, varnames = c("childid", "s1_id" , "s2_id" , "s3_id" , "s4_id", "x1kage_r" , 
                                                  "x2kage_r","x3age" , "x4age", "x_chsex_r", "x1locale" , "x2locale" , "x3locale" , "x4locale",
-                                                 "x2inccat_i" , "x4inccat_i", "x2povty", "x4povty_i", "x1pubpri" , "x2pubpri" , "x3pubpri" , "x4pubpri",
+                                                 "x2inccat_i" , "x4inccat_i", "x2povty", "x4povty_i", "p1hig_1", "p2hig_1", "p4hig_1_i", 
+                                                 "x1pubpri" , "x2pubpri" , "x3pubpri" , "x4pubpri",
                                                  "x1firkdg", "t1firkdg","c1spasmt", "c2spasmt" , "c3spasmt" , "c4spasmt", "c1enghm" , "c2enghm" , 
                                                  "c3nenghm" , "c4nenghm", "c1sphome" , "c2sphome" , "c3sphome" , "c4sphome", "p1prmln1", "p1prmln2", 
-                                                 "p1prmlng", "t2ennat", "t4ennat", "t4kennat","x_hisp_r", "x1tchapp" , "x2tchapp", "x3tchapp", "x4tchapp","x4ktchapp",
-                                                 "x1prnapp" , "x2prnapp" , "x4prnapp", "x2clsnss" , "x2cnflct" ,"x4clsnss", "x4kclsnss","x4cnflct","x4kcnflct", 
-                                                 "x1tchext", "x2tchext", "x3tchext", "x4tchext", "x4ktchext", "x1inbcnt", "x2inbcnt", "x4inbcnt", "x4kinbcnt",
-                                                 "x1attnfs", "x2attnfs", "x4attnfs", "x4kattnfs", 
+                                                 "p1prmlng", "t2ennat", "t4ennat", "t4kennat","x_hisp_r", "x_raceth_r", "x_racethp_r", "x1tchapp" , "x2tchapp", "x3tchapp", "x4tchapp",
+                                                 "x1prnapp" , "x2prnapp" , "x4prnapp", "x2clsnss" , "x2cnflct" ,"x4clsnss","x4cnflct", 
+                                                 "x1tchext", "x2tchext", "x3tchext", "x4tchext", "x1inbcnt", "x2inbcnt", "x4inbcnt",
+                                                 "x1attnfs", "x2attnfs", "x4attnfs", 
                                                  "x1plss" , "x2plss" , "x3plss" , "x4plss", "x1plart" , "x2plart" , "x3plart" , "x4plart",
-                                                 "x1pltot" , "x2pltot" , "x3pltot" , "x4pltot", "t1keeps", "t2keeps", "t3keeps", "t4keeps", "t4kkeeps",
-                                                 "t1shows", "t2shows", "t3shows", "t4shows", "t4kshows",
-                                                 "t1works", "t2works", "t3works", "t4works", "t4kworks",
-                                                 "t1adapts", "t2adapts", "t3adapts", "t4adapts", "t4kadapts",
-                                                 "t1persis", "t2persis", "t3persis", "t4persis", "t4kpersis",
-                                                 "t1atten", "t2atten", "t3atten", "t4atten", "t4katten",
-                                                 "t1follow", "t2follow", "t3follow", "t4follow", "t4kfollow",
+                                                 "x1pltot" , "x2pltot" , "x3pltot" , "x4pltot", "t1keeps", "t2keeps", "t3keeps", "t4keeps",
+                                                 "t1shows", "t2shows", "t3shows", "t4shows", 
+                                                 "t1works", "t2works", "t3works", "t4works",
+                                                 "t1adapts", "t2adapts", "t3adapts", "t4adapts",
+                                                 "t1persis", "t2persis", "t3persis", "t4persis",
+                                                 "t1atten", "t2atten", "t3atten", "t4atten",
+                                                 "t1follow", "t2follow", "t3follow", "t4follow",
                                                  "t1class","t2nstnl", "a2smlgrp", "a4wksgrp", "a2anonen", "a2pnonen", "a2dnonen", "a4noneng", "a4nonin",
                                                  "a1timdis", "a4dscptim", "a1yrstch", "a4yrstch", "a1yrsch", "a4yrsch", "a1hghstd", "a4hghstd", "a1early", "a4early",
                                                  "a1esl", "a4esl", "a1devlp", "a4devlp", "a1yrborn", "a4yrborn", "a1highql", "a4highql",
                                                  "a1aspnin", "a1pspnin", "a1dspnin", "a4spnin", "a1atnoot", "a1ptnoot", "a1dtnoot", "a4tnoot",
                                                  "a1atspnh", "a1ptspnh", "a1dtspnh", "a4tspnh","a1ahisp", "a1phisp", "a1dhisp", "a1acspnh", "a1pcspnh", "a1dcspnh", "a4cspnh", 
                                                  "a1aell", "a1pell", "a1dell", "a2aell", "a2pell", "a2dell", "a4ell", "a1anmell", "a1pnmell", "a1dnmell", "a4nmell",
-                                                 "a1ahisp", "a1phisp", "a1dhisp", "a4shisp"), 
-                    addAttributes = TRUE, omittedLevels = FALSE)
+                                                 "a1ahisp", "a1phisp", "a1dhisp", "a4shisp", "w12t0", "w4cf4p20"), 
+                    addAttributes = TRUE, dropOmittedLevels = FALSE)
+#X2/4tk vars have been removed... AKA scores for those held back
+
+write.csv(large.df, "ecls11 large df.csv")
+
 ####        General Variables     #####
 "childid" # Child ID num
 "s1_id" , "s2_id" , "s3_id" , "s4_id" # Fall/Spring Kinder/1st  SCHOOL IDENTIFICATION NUMBER
