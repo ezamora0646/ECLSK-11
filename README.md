@@ -16,7 +16,7 @@ The main objectives of this analysis are to:
 
 ## Data Structure Overview
 
-![299 ERD](299 ERD.jpg)
+![Image](https://github.com/user-attachments/assets/d6b61673-1659-481b-88e7-fdfbff91bdb1)
 
 ## Executive Summary
 
