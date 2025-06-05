@@ -1,10 +1,11 @@
 # English Proficiency, Approaches to Learning, and the Moderating Role of Student-Teacher Relationships
 
-__One Paragraph+__ describing the project goes here. For example: This is a README template you would use to describe a scientific or data analysis project. Provide an overview of the goals of the project, how data was obtained, and other important details others or you in 6 months should be aware of.
+## Scope of Analysis
+Scientific literature on Multilingual students documents disparate achievement outcomes for those with lower English proficiency. However, past analyses have not considered external factors such as indicators of the classroom quality. Student-teacher relationships has often been overlooked when predicting student achievement outcomes, particularly for multilingual students. This analysis aims to explore the degree to which student-teacher relationships explains the differences in achievement patterns students low and high English proficiency.
 
 ## Data
 
-Describe the dataset in more detail here if necessary
+This project focuses on the Spanish-English multilingual student subsample (n= 1200+) of the Early Childhood Longitudinal Study 2011 cohort. This is a nationally representative dataset collected by the National Center of Education Statistics <https://nces.ed.gov/ecls/datainformation2011.asp> 
 
 __Data Contact__
 
