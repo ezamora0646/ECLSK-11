@@ -16,6 +16,8 @@ The main objectives of this analysis are to:
 
 ## Data Structure Overview
 
+![299 ERD](299 ERD.jpg)
+
 ## Executive Summary
 
 A step by step series of examples that tell you how to get a development/analysis env running
