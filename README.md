@@ -22,8 +22,10 @@ The main objectives of this analysis are to:
 
 ## Executive Summary
 
-In kindergarten (2010-11) female gender (1.45), higher scores in fall ATL (2.80), attentional focus (1.44), as well as closeness (2.77) all increase a student’s odds of receiving a high ATL rating in the spring. /n
-First grade (2011-12) data ***does not indicate*** relationship scores as a moderator of the relationship between English proficiency and ATL ratings. Students with higher conflict were 0.27 times less likely to recieve a high ATL rating. While greater age (1.06 ), female gender (1.39 ), and higher attentional focus (1.35 ) scores were associated with increased likelihood of reciving a high ATL rating./n
+In kindergarten (2010-11) female gender (1.45), higher scores in fall ATL (2.80), attentional focus (1.44), as well as closeness (2.77) all increase a student’s odds of receiving a high ATL rating in the spring.
+
+First grade (2011-12) data ***does not indicate*** relationship scores as a moderator of the relationship between English proficiency and ATL ratings. Students with higher conflict were 0.27 times less likely to recieve a high ATL rating. While greater age (1.06 ), female gender (1.39 ), and higher attentional focus (1.35 ) scores were associated with increased likelihood of reciving a high ATL rating.
+
 These findings highlight that students' language status is not a primary predictor of academic achievement. Further analyses should turn to teacher's structure of the classroom and the ways in which it affects students' engagement
 
 ## Insights Deep Dive
