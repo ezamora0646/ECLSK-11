@@ -9,7 +9,9 @@ This project focuses on the Spanish-English multilingual student subsample (n= 1
 
 ECLS-K:2011 contains records of over 18,000 students from 1,300 schools across the country. Data collected ranges from direct assessments, teacher surveys, and parent surveys. 
 
-<img width="631" alt="Image" src="https://github.com/user-attachments/assets/d09d744d-577e-4b73-a9c3-cbcfe41d2b43" />
+<div align="center">
+ <img width="631" alt="Image" src="https://github.com/user-attachments/assets/d09d744d-577e-4b73-a9c3-cbcfe41d2b43" />
+</div>
 
 ## Project Goals
 
