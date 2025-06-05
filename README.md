@@ -12,7 +12,9 @@ This project focuses on the Spanish-English multilingual student subsample (n= 1
 The main objectives of this analysis are to:
 1. Replicate findings from 1999 with the most recently available data to deepen the knowledge base of diverse student populations.
 2. Investigate if patterns reported for general multilingual populations exist among Spanish-English multinguals to identify their learning needs.
-3. Generate findings that inform culturally and lingusitcally responsive teaching strategies
+3. Generate findings that inform culturally and lingusitcally responsive teaching strategies.
+
+## Data Structure Overview
 
 ## Executive Summary
 
