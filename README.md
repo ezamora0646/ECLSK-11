@@ -1,4 +1,4 @@
-# English Proficiency, Approaches to Learning, and the Moderating Role of Student-Teacher Relationships
+# English Proficiency, Approaches to Learning, and the Moderating Role of Student-Teacher Relationships (2010-2012)
 
 ## Scope of Analysis
 Scientific literature on Multilingual students documents ***disparate achievement outcomes*** for those with lower English proficiency. However, past analyses have not considered external factors such as indicators of the classroom quality. ***Student-teacher relationships have often been overlooked*** when predicting student achievement outcomes, particularly for multilingual students. This analysis aims to explore the degree to which student-teacher relationships ***explains the differences in achievement patterns*** for students low and high English proficiency.
@@ -10,7 +10,7 @@ This project focuses on the Spanish-English multilingual student subsample (n= 1
 ## Project Goals
 
 The main objectives of this analysis are to:
-1. Replicate findings from 1999 with the most recently available data to deepen the knowledge base of diverse student populations.
+1. Replicate findings from 1999 with the most recently available data (2010-2012) to deepen the knowledge base of diverse student populations.
 2. Investigate if patterns reported for general multilingual populations exist among Spanish-English multinguals to identify their learning needs.
 3. Generate findings that inform culturally and lingusitcally responsive teaching strategies.
 
