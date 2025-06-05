@@ -1,7 +1,7 @@
 # English Proficiency, Approaches to Learning, and the Moderating Role of Student-Teacher Relationships (2010-2012)
 
 ## Scope of Analysis
-Scientific literature on Multilingual students documents ***disparate achievement outcomes*** for those with lower English proficiency. However, past analyses have not considered external factors such as indicators of the classroom quality. ***Student-teacher relationships have often been overlooked*** when predicting student achievement outcomes, particularly for multilingual students. This analysis aims to explore the degree to which student-teacher relationships ***explains the differences in achievement patterns*** for students low and high English proficiency.
+Scientific literature on Multilingual students documents ***disparate achievement outcomes*** for those with lower English proficiency. However, past analyses have not considered external factors such as indicators of the classroom quality. ***Student-teacher relationships have often been overlooked*** when predicting student achievement outcomes, particularly for multilingual students. This analysis aims to explore the degree to which student-teacher relationships ***explains the differences in achievement patterns*** for students with low and high English proficiency.
 
 ## Data
 
