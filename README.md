@@ -5,7 +5,7 @@ Scientific literature on Multilingual students documents ***disparate achievemen
 
 ## Dataset & Overview of Data Structure
 
-This project focuses on the Spanish-English multilingual student subsample (n= 1200+) of the Early Childhood Longitudinal Study 2011 (ECLS-K:2011) cohort. This is a nationally representative dataset collected by the National Center of Education Statistics <https://nces.ed.gov/ecls/datainformation2011.asp> 
+This project focuses on the Spanish-English multilingual student subsample (n= 1200+) of the Early Childhood Longitudinal Study 2011 (ECLS-K:2011) cohort. This is a nationally representative dataset collected by the National Center for Education Statistics <https://nces.ed.gov/ecls/datainformation2011.asp> 
 
 ECLS-K:2011 contains records of over 18,000 students from 1,300 schools across the country. Data collected ranges from direct assessments, teacher surveys, and parent surveys. The outcome of interest is students' Approaches to Learning (ATL) ratings.
 
