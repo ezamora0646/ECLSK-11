@@ -7,15 +7,6 @@ Scientific literature on Multilingual students documents disparate achievement o
 
 This project focuses on the Spanish-English multilingual student subsample (n= 1200+) of the Early Childhood Longitudinal Study 2011 cohort. This is a nationally representative dataset collected by the National Center of Education Statistics <https://nces.ed.gov/ecls/datainformation2011.asp> 
 
-__Data Contact__
-
-List a data contact that can be contacted for inqueries regarding archiving and/or removal of data. Two methods of contact should be left, including one that is outside / external to the current institution.
-
-* **Daniel E. Cook <danielecook@gmail.com>** - Contact for inqueries regarding data located in `primary/data/folder`.
-* __Expiration Date__ -  YYYYMMDD - Data can be (deleted | archived) <-- choose one
-
-Most scripts / analysis can be left as they often do not take up substantial amounts of space, so it is important to describe in detail how data should be handled.
-
 ## Getting Started
 
 What are the primary analysis scripts/starting points? How would the analysis be rerun?
