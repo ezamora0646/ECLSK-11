@@ -16,7 +16,7 @@ The main objectives of this analysis are to:
 
 ## Data Structure Overview
 
-![Image](https://github.com/user-attachments/assets/d6b61673-1659-481b-88e7-fdfbff91bdb1)
+<img width="631" alt="Image" src="https://github.com/user-attachments/assets/d09d744d-577e-4b73-a9c3-cbcfe41d2b43" />
 
 ## Executive Summary
 
