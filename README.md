@@ -7,13 +7,12 @@ Scientific literature on Multilingual students documents disparate achievement o
 
 This project focuses on the Spanish-English multilingual student subsample (n= 1200+) of the Early Childhood Longitudinal Study 2011 cohort. This is a nationally representative dataset collected by the National Center of Education Statistics <https://nces.ed.gov/ecls/datainformation2011.asp> 
 
-## Getting Started
+## Project Goals
 
-What are the primary analysis scripts/starting points? How would the analysis be rerun?
-
-```
-Give an example
-```
+The main objectives of this analysis are to:
+1. Replicate findings from 1999 with the most recently available data to deepen the knowledge base of diverse student populations.
+2. Investigate if patterns reported for general multilingual populations exist among Spanish-English multinguals to identify their learning needs.
+3. Generate findings that inform culturally and lingusitcally responsive teaching strategies
 
 ### Requirements
 
