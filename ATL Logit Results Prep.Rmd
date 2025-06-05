@@ -1,0 +1,277 @@
+---
+title: "Logit ATL results"
+output: html_document
+date: "2024-08-29"
+
+
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(mice)
+library(miceadds)
+library(mitools)
+library(sandwich)
+library(survey)
+library(naniar)
+```
+
+## Descriptives - w MI DATA
+```{r}
+desc.long <- complete(imp, "long", include = F) # long format WITHOUT OG data
+
+cont.vars <- c("x2kage_r", "x1tchapp" , "x2tchapp", "x2prnapp", "x2pltot", "x2clsnss", "x2cnflct", "x2inbcnt","x2attnfs")
+
+cat.vars <- c("cat.atl", "x_chsex_r", "x2povty", "kndr_par_ed", "x2locale", "x2pubpri")
+
+age.mean <- with(imp, lm(x2kage_r~1))
+summary(pool(age.mean))
+
+atl.mean.f <- with(imp, lm(x1tchapp~1))
+summary(pool(atl.mean.f))
+
+atl.mean.s <- with(imp, lm(x2tchapp~1))
+summary(pool(atl.mean.s))
+
+parnt.atl.mean <- with(imp, lm(x2prnapp~1))
+summary(pool(parnt.atl.mean))
+
+lang.mean <- with(imp, lm(x2pltot~1))
+summary(pool(lang.mean))
+
+cls.mean <- with(imp, lm(x2clsnss~1))
+summary(pool(cls.mean))
+
+cnflct.mean <- with(imp, lm(x2cnflct~1))
+summary(pool(cnflct.mean))
+
+inhb.mean <- with(imp, lm(x2inbcnt~1))
+summary(pool(inhb.mean))
+
+attn.mean <- with(imp, lm(x2attnfs~1))
+summary(pool(attn.mean))
+
+imp.corr <- miceadds::micombine.cor(mi.res = imp, variables = cont.vars)
+attr(imp.corr, "r_matrix")
+
+rbind(mi.n.p(imp, "cat.atl"))
+
+rbind(mi.n.p.by(imp, "cat.atl", BY = "x_chsex_r"))
+rbind(mi.n.p.by(imp, "cat.atl", BY = "x2povty"))
+rbind(mi.n.p.by(imp, "cat.atl", BY = "kndr_par_ed"))
+#splits between groups may not be even between imputations 
+```
+## Prep for Sample Weights 
+```{r}
+#attempting to run weighted regression on imputed data sets 
+#return after obtaining non-weighted results - 9/17 
+
+wghtd.imp <- complete(imp, "all", include = T)
+create_survey_designs <- function(imp_list) {
+  # Extract only the imputed datasets (skip index 0)
+  imp_datasets <- imp_list[-1]  # Skip the first dataset, which is the original data
+  
+  # Create survey design objects for each imputed dataset
+  lapply(imp_datasets, function(df_list) {
+    # Extract the data frame
+    df <- df_list[[1]]  # Assuming the data frame is the first element of the list
+    
+    # Extract the cluster variable and weights
+    s2_id <- df_list[["s2_id"]]
+    w12t0 <- df_list[["w12t0"]]
+    
+    # Ensure the data frame contains the necessary columns
+    stopifnot("s2_id" %in% colnames(df))
+    stopifnot("w12t0" %in% colnames(df))
+    
+    # Create the survey design object
+    svydesign(ids = ~s2_id, weights = ~w12t0, nested = TRUE, data = df)
+  })
+}
+
+k.design <- create_survey_designs(wghtd.imp)
+
+
+
+logit.model <- svyglm(cat.atl ~ x1tchapp, 
+                      family="binomial", design = k.design)
+k.design <- svydesign(ids=~s2_id, weights = ~w12t0, data=desc.long, nested=T)
+wghtd.model <- with(imp, logit.model)
+summary(pool(wghtd.model))
+```
+
+
+## Model choices
+
+#Logistic Regression - separate closeness/conflict Models - Clustered SE
+```{r}
+#correlations 
+
+kinder.corr <- kinder.corr %>% as.data.frame() 
+kinder.corr <- tibble::rownames_to_column(kinder.corr, "Variable")
+
+gt.corr <- kinder.corr %>% gt() %>% 
+  tab_header(
+    title = "Correlation Matrix for Cont. Variables"
+  ) %>%
+  fmt_number(
+    columns = -Variable, # Apply formatting to all numeric columns except 'Variable'
+    decimals = 2 # Round to 2 decimal places
+  ) %>%
+  data_color(
+    columns = -Variable, # Apply color formatting to the correlation values
+    colors = scales::col_numeric(
+      palette = c("blue", "white", "red"), # Color gradient from blue to red
+      domain = c(-1, 1) # Set the range from -1 to 1 for correlations
+    )
+  ) %>%
+  tab_options(
+    table.font.size = "small", # Adjust font size
+    table.width = "auto"       # Make table width adaptive
+  ) %>%
+  tab_style(
+    style = list(
+      cell_borders(sides = "all", color = "gray", weight = px(1))
+    ),
+    locations = cells_body(columns = everything())
+  ) %>%
+  cols_label(
+    Variable = " "
+  )
+
+gt.corr
+
+apa.corr <- kinder.corr %>% gt() %>% 
+  tab_header( title = "Correlation Matrix"
+  ) %>%
+  fmt_number(
+    columns = -Variable, # Apply formatting to all numeric columns except 'Variable'
+    decimals = 2 # Round to 2 decimal places
+  ) %>%
+  cols_label(
+    Variable = "" # Remove the label for the 'Variable' column for APA style
+  ) %>%
+  tab_options(
+    table.border.top.style = "none", # Remove top border
+    table.border.bottom.style = "none", # Remove bottom border
+    table_body.hlines.style = "none", # Remove horizontal lines between rows
+    table_body.vlines.style = "none", # Remove vertical lines between columns
+    table.font.size = "medium", # Use medium font size for readability
+    table.align = "center" # Center align the table
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(align = "center") # Center the text
+    ),
+    locations = cells_body(columns = everything())
+  ) %>%
+  tab_style(
+    style = list(
+      cell_borders(
+        sides = "bottom", color = "black", weight = px(1)
+      )
+    ),
+    locations = cells_column_labels(everything())
+  ) %>%
+  opt_table_lines("none") # Remove external table lines
+
+apa.corr
+```
+
+
+```{r}
+k.mod1 <- with(imp, glm(I(cat.atl=="High") ~ x1tchapp+x2kage_r+x2povty+kndr_par_ed+
+                        x1tchapp+x2prnapp+x2inbcnt+x2attnfs+
+                        a1yrstch+a1hghstd+
+                        x2pltot+x2clsnss+x2pltot:x2clsnss, 
+                      family="binomial"))
+summary(pool(k.mod1))
+
+naniar::miss_summary(dll.atl.kndr)
+naniar::miss_summary(dll.atl.frst)
+```
+
+#Logistic Regression - Account for conflict, test Closeness - Clustered SE
+```{r}
+#use this model for unweighted results - 9/17
+
+# d= data set used to create OG imp object
+
+cat.mod <- lapply(imp, FUN=function(data){
+  glm.cluster(data= d, 
+              formula=I(cat.atl=="High") ~ x1tchapp+x2kage_r+x2povty+kndr_par_ed+
+              x1tchapp+x2prnapp+x2inbcnt+x2attnfs+
+              a1yrstch+a1hghstd+
+              x2pltot+x2cnflct+x2clsnss+x2pltot:x2clsnss, 
+            cluster=d$s2_id,
+            family="binomial") 
+})
+# extract parameters and covariance matrix
+betas.2 <- lapply( cat.mod, FUN=function(rr){ coef(rr) } )
+vars.2 <- lapply( cat.mod, FUN=function(rr){ vcov(rr) } )
+# conduct statistical inference
+summary( miceadds::pool_mi( qhat=betas.2, u=vars.2))
+
+
+```
+
+# Logistic Regression - PCA Relationship - Clustered SE
+```{r}
+#still unclear why %missing column is populated - 9/17
+
+rslt.3 <- with(mids.pca, glm(I(cat.atl=="High") ~ x1tchapp+x2kage_r+x2povty+kndr_par_ed+
+                        x1tchapp+x2prnapp+x2inbcnt+x2attnfs+
+                        a1yrstch+a1hghstd+
+                        x2pltot+relation.pca+x2pltot:relation.pca, 
+                        family=binomial(link = 'logit')))
+
+models <- rslt.3$analyses
+
+betas.3 <- lapply(models, function(model) coef(model))
+vars.3 <- lapply(models, FUN = function(x){vcovCL(x, cluster = mids.pca[[1]]$s2_id)}) #vcovCL is in the sandwich package
+  # conduct statistical inference
+summary(miceadds::pool_mi(betas.3, vars.3))
+
+
+#investigating missinfo column
+
+missing_summary <- lapply(mids$imp, function(df) {
+  sapply(df, function(col) sum(is.na(col)))
+})
+
+print(sapply(imp.list, function(df) any(is.na(df))))
+
+```
+
+
+```{r}
+#DO NOT USE 
+rslt.3 <- lapply(imp.list, FUN=function(data){ 
+  glm.cluster(data= d, 
+              formula=I(cat.atl) ~ x1tchapp+x2kage_r+x2povty+kndr_par_ed+
+                        x1tchapp+x2prnapp+x2inbcnt+x2attnfs+
+                        a1yrstch+a1hghstd+
+                        x2pltot+relation.pca+x2pltot:relation.pca,
+                        cluster=d$s2_id,
+                        family="binomial")
+  })
+#this approach doesn't work bc it is calling on vars stored in d (df used for imputation) and PCA scores where added after imputation
+
+betas.3 <- lapply(rslt.3, FUN=function(rr){ coef(rr) })
+vars.3 <- lapply(rslt.3, FUN=function(rr){ vcov(rr) }}) #vcovCL is in the sandwich package
+  # conduct statistical inference
+summary(miceadds::pool_mi(qhat= betas.3, u=vars.3))
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
