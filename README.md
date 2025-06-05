@@ -3,9 +3,13 @@
 ## Scope of Analysis
 Scientific literature on Multilingual students documents ***disparate achievement outcomes*** for those with lower English proficiency. However, past analyses have not considered external factors such as indicators of the classroom quality. ***Student-teacher relationships have often been overlooked*** when predicting student achievement outcomes, particularly for multilingual students. This analysis aims to explore the degree to which student-teacher relationships ***explains the differences in achievement patterns*** for students with low and high English proficiency.
 
-## Data
+## Dataset & Overview of Data Structure
 
-This project focuses on the Spanish-English multilingual student subsample (n= 1200+) of the Early Childhood Longitudinal Study 2011 cohort. This is a nationally representative dataset collected by the National Center of Education Statistics <https://nces.ed.gov/ecls/datainformation2011.asp> 
+This project focuses on the Spanish-English multilingual student subsample (n= 1200+) of the Early Childhood Longitudinal Study 2011 (ECLS-K:2011) cohort. This is a nationally representative dataset collected by the National Center of Education Statistics <https://nces.ed.gov/ecls/datainformation2011.asp> 
+
+ECLS-K:2011 contains records of over 18,000 students from 1,300 schools across the country. Data collected ranges from direct assessments, teacher surveys, and parent surveys. 
+
+<img width="631" alt="Image" src="https://github.com/user-attachments/assets/d09d744d-577e-4b73-a9c3-cbcfe41d2b43" />
 
 ## Project Goals
 
@@ -13,10 +17,6 @@ The main objectives of this analysis are to:
 1. Replicate findings from 1999 with the most recently available data (2010-2012) to deepen the knowledge base of diverse student populations.
 2. Investigate if patterns reported for general multilingual populations exist among Spanish-English multinguals to identify their learning needs.
 3. Generate findings that inform culturally and lingusitcally responsive teaching strategies.
-
-## Data Structure Overview
-
-<img width="631" alt="Image" src="https://github.com/user-attachments/assets/d09d744d-577e-4b73-a9c3-cbcfe41d2b43" />
 
 ## Executive Summary
 
