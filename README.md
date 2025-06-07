@@ -36,47 +36,46 @@ These findings highlight that students' language status is not a primary predict
 
 ##### Female Gender
 
-<div align="center">
+
 [Female & ATL Odds.pdf](https://github.com/user-attachments/files/20635861/Female.ATL.Odds.pdf)
-</div>
 
 [Discussion]
 
 ##### Age 
 
-<div align="center">
+
 [Age & ATL odds.pdf](https://github.com/user-attachments/files/20635874/Age.ATL.odds.pdf)
-</div>
+
 
 [Discussion]
 
 #### Relationship Scores & Other Teacher Ratings
 
 ##### Closeness
-<div align="center">
+
 [Closeness & ATL odds.pdf](https://github.com/user-attachments/files/20635878/Closeness.ATL.odds.pdf)
-</div>
+
 
 [Discussion]
 
 ##### Conflict
-<div align="center">
+
 [Conflict & ATL odds.pdf](https://github.com/user-attachments/files/20635879/Conflict.ATL.odds.pdf)
-</div>
+
 
 [Discussion]
 
 ##### Attentional Focus
-<div align="center">
+
 [Atten Focus & ATL Odds.pdf](https://github.com/user-attachments/files/20635886/Atten.Focus.ATL.Odds.pdf)
-</div>
+
 
 [Discussion]
 
 ##### Fall ATL 
-<div align="center">
+
 [Fall ATL & Spring ATL odds.pdf](https://github.com/user-attachments/files/20635895/Fall.ATL.Spring.ATL.odds.pdf)
-</div>
+
 
 [Discussion]
 
@@ -85,30 +84,30 @@ These findings highlight that students' language status is not a primary predict
 #### Demographics: Age & Gender
 
 ##### Age
-<div align="center">
+
 [Fst Age & ATL odds.pdf](https://github.com/user-attachments/files/20635893/Fst.Age.ATL.odds.pdf)
-</div>
+
 
 [Discussion]
 
 ##### Female Gender
-<div align="center">
+
 [Female & Fst ATL.pdf](https://github.com/user-attachments/files/20635891/Female.Fst.ATL.pdf)
-</div>
+
 
 [Discussion]
 
 #### Relationship Scores & Other Teacher Ratings
 
 ##### Conflict
-<div align="center">
+
 [Fst Conflict & ATL odds.pdf](https://github.com/user-attachments/files/20635894/Fst.Conflict.ATL.odds.pdf)
-</div>
+
 
 ##### Longitduinal Effect of Attentional Focus
-<div align="center">
+
 [K Atten Focus & Fst ATL.pdf](https://github.com/user-attachments/files/20635892/K.Atten.Focus.Fst.ATL.pdf)
-</div>
+
 
 List references with links to publications this analysis was used for.
 
