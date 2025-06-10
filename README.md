@@ -93,7 +93,9 @@ These findings highlight that students' language status is not a primary predict
 
 ##### Female Gender
 
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f" alt="Image 8" width="600">
+</p>
 
 
 [Discussion]
