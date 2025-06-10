@@ -1,7 +1,26 @@
 # English Proficiency, Approaches to Learning, and the Moderating Role of Student-Teacher Relationships (SY 2010-2012)
 
-## Table of Conents
+## Table of Contents
 
+- [Scope of Analysis](#scope-of-analysis)
+- [Dataset & Overview of Data Structure](#dataset--overview-of-data-structure)
+- [Project Goals](#project-goals)
+- [Executive Summary](#executive-summary)
+- [Insights Deep Dive](#insights-deep-dive)
+  - [Kindergarten Main Effects](#kindergarten-main-effects)
+    - [Demographics: Age & Gender](#demographics-age--gender)
+      - [Female Gender](#female-gender)
+      - [Age](#age)
+      - [Closeness](#closeness)
+      - [Conflict](#conflict)
+      - [Attentional Focus](#attentional-focus)
+      - [Fall ATL](#fall-atl)
+  - [First Grade Main Effects](#first-grade-main-effects)
+    - [Female Gender](#female-gender-1)
+    - [Age](#age-1)
+    - [Conflict](#conflict-1)
+    - [Longitudinal Effect of Attentional Focus](#longitudinal-effect-of-attentional-focus)
+  
 
 ## Scope of Analysis
 Scientific literature on Multilingual students documents ***disparate achievement outcomes*** for those with lower English proficiency. However, past analyses have not considered external factors such as indicators of the classroom quality. ***Student-teacher relationships have often been overlooked*** when predicting student achievement outcomes, particularly for multilingual students. This analysis aims to explore the degree to which student-teacher relationships ***explains the differences in achievement patterns*** for students with low and high English proficiency.
