@@ -95,7 +95,7 @@ These findings highlight that students' language status is not a primary predict
 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f" alt="Image 8" width="600">
+  <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9" width="600">
 </p>
 
 
