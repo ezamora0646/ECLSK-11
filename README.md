@@ -35,9 +35,9 @@ These findings highlight that students' language status is not a primary predict
 #### Demographics: Age & Gender
 
 ##### Female Gender
-
-![Image](https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf)
-
+<p align="center">
+<![Image](https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf)>
+</p>
 
 
 [Discussion]
