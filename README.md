@@ -37,7 +37,8 @@ These findings highlight that students' language status is not a primary predict
 ##### Female Gender
 
 
-[Female & ATL Odds.pdf](https://github.com/user-attachments/files/20635861/Female.ATL.Odds.pdf)
+
+[female k](https://github.com/ezamora0646/ECLSK-11/blob/00cbd082f67da644e8101b11e5c78cef87cdd0f5/k%20gender%20k%20atl.png)
 
 [Discussion]
 
