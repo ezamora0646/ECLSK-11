@@ -36,7 +36,7 @@ These findings highlight that students' language status is not a primary predict
 
 ##### Female Gender
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf" alt="Image 1" width="600">
+  <img src="https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf" alt="Image 1">
 </p>
 
 
@@ -45,7 +45,7 @@ These findings highlight that students' language status is not a primary predict
 ##### Age 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6d9d0593-9089-411b-8b69-a1f459d71995" alt="Image 2" width="600">
+  <img src="https://github.com/user-attachments/assets/6d9d0593-9089-411b-8b69-a1f459d71995" alt="Image 2">
 </p>
 
 
@@ -56,7 +56,7 @@ These findings highlight that students' language status is not a primary predict
 ##### Closeness
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6" alt="Image 3" width="600">
+  <img src="https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6" alt="Image 3">
 </p>
 
 
@@ -65,14 +65,14 @@ These findings highlight that students' language status is not a primary predict
 ##### Conflict
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/e3cadcad-1778-458e-9aa8-d77a12b9bebb" alt="Image 4" width="600">
+  <img src="https://github.com/user-attachments/assets/e3cadcad-1778-458e-9aa8-d77a12b9bebb" alt="Image 4">
 </p>
 [Discussion]
 
 ##### Attentional Focus
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/f84d15d0-fd88-4487-b202-5ec2980e29bb" alt="Image 5" width="600">
+  <img src="https://github.com/user-attachments/assets/f84d15d0-fd88-4487-b202-5ec2980e29bb" alt="Image 5">
 </p>
 
 
@@ -81,7 +81,7 @@ These findings highlight that students' language status is not a primary predict
 ##### Fall ATL 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/fd608853-53cb-4aec-beb9-1119818f168e" alt="Image 6" width="600">
+  <img src="https://github.com/user-attachments/assets/fd608853-53cb-4aec-beb9-1119818f168e" alt="Image 6">
 </p>
 
 
@@ -94,7 +94,7 @@ These findings highlight that students' language status is not a primary predict
 ##### Female Gender
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f" alt="Image 8" width="600">
+  <img src="https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f" alt="Image 8">
 </p>
 
 
@@ -103,7 +103,7 @@ These findings highlight that students' language status is not a primary predict
 ##### Age
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9" width="600">
+  <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9">
 </p>
 
 
@@ -114,7 +114,7 @@ These findings highlight that students' language status is not a primary predict
 ##### Conflict
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6a033b3f-70e5-4580-8bfe-92f410d2160a" alt="Image 10" width="600">
+  <img src="https://github.com/user-attachments/assets/6a033b3f-70e5-4580-8bfe-92f410d2160a" alt="Image 10">
 </p>
 
 
