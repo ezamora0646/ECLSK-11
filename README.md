@@ -93,11 +93,9 @@ These findings highlight that students' language status is not a primary predict
 
 ##### Female Gender
 
-
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9" width="600">
+  <img src="https://github.com/user-attachments/assets/193ec398-0c68-4b36-9e3d-2c408caac6b3" alt="Image">
 </p>
-
 
 [Discussion]
 
@@ -115,7 +113,7 @@ These findings highlight that students' language status is not a primary predict
 ##### Conflict
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/6a033b3f-70e5-4580-8bfe-92f410d2160a" alt="Image 10">
+  <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9">
 </p>
 
 
