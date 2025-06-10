@@ -36,16 +36,16 @@ These findings highlight that students' language status is not a primary predict
 
 ##### Female Gender
 
+![Image](https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf)
 
 
-[female k.png](https://github.com/ezamora0646/ECLSK-11/blob/00cbd082f67da644e8101b11e5c78cef87cdd0f5/k%20gender%20k%20atl.png)
 
 [Discussion]
 
 ##### Age 
 
 
-[Age & ATL odds.pdf](https://github.com/user-attachments/files/20635874/Age.ATL.odds.pdf)
+![Image](https://github.com/user-attachments/assets/6d9d0593-9089-411b-8b69-a1f459d71995)
 
 
 [Discussion]
@@ -54,28 +54,28 @@ These findings highlight that students' language status is not a primary predict
 
 ##### Closeness
 
-[Closeness & ATL odds.pdf](https://github.com/user-attachments/files/20635878/Closeness.ATL.odds.pdf)
+![Image](https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6)
 
 
 [Discussion]
 
 ##### Conflict
 
-[Conflict & ATL odds.pdf](https://github.com/user-attachments/files/20635879/Conflict.ATL.odds.pdf)
+![Image](https://github.com/user-attachments/assets/e3cadcad-1778-458e-9aa8-d77a12b9bebb)
 
 
 [Discussion]
 
 ##### Attentional Focus
 
-[Atten Focus & ATL Odds.pdf](https://github.com/user-attachments/files/20635886/Atten.Focus.ATL.Odds.pdf)
+![Image](https://github.com/user-attachments/assets/f84d15d0-fd88-4487-b202-5ec2980e29bb)
 
 
 [Discussion]
 
 ##### Fall ATL 
 
-[Fall ATL & Spring ATL odds.pdf](https://github.com/user-attachments/files/20635895/Fall.ATL.Spring.ATL.odds.pdf)
+![Image](https://github.com/user-attachments/assets/fd608853-53cb-4aec-beb9-1119818f168e)
 
 
 [Discussion]
@@ -84,16 +84,16 @@ These findings highlight that students' language status is not a primary predict
 
 #### Demographics: Age & Gender
 
-##### Age
+##### Female Gender
 
-[Fst Age & ATL odds.pdf](https://github.com/user-attachments/files/20635893/Fst.Age.ATL.odds.pdf)
+![Image](https://github.com/user-attachments/assets/3d7b88d8-62e2-4bd4-a897-77d50424ee77)
 
 
 [Discussion]
 
-##### Female Gender
+##### Age
 
-[Female & Fst ATL.pdf](https://github.com/user-attachments/files/20635891/Female.Fst.ATL.pdf)
+![Image](https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f)
 
 
 [Discussion]
@@ -102,12 +102,12 @@ These findings highlight that students' language status is not a primary predict
 
 ##### Conflict
 
-[Fst Conflict & ATL odds.pdf](https://github.com/user-attachments/files/20635894/Fst.Conflict.ATL.odds.pdf)
+![Image](https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8)
 
 
 ##### Longitduinal Effect of Attentional Focus
 
-[K Atten Focus & Fst ATL.pdf](https://github.com/user-attachments/files/20635892/K.Atten.Focus.Fst.ATL.pdf)
+![Image](https://github.com/user-attachments/assets/6a033b3f-70e5-4580-8bfe-92f410d2160a)
 
 
 List references with links to publications this analysis was used for.
