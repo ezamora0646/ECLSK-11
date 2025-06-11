@@ -9,12 +9,7 @@
 - [Insights Deep Dive](#insights-deep-dive)
   - [Comparison of Average Trends & Main Effects](#Comparison-of-Average-Trends-&-Main-Effects)
     - [Demographics: Age & Gender](#demographics-age--gender)
-      - [Female Gender](#female-gender)
-      - [Age](#age)
-      - [Closeness](#closeness)
-      - [Conflict](#conflict)
-      - [Attentional Focus](#attentional-focus)
-      - [Fall ATL](#fall-atl)
+    - [Relationship Scores & Academic Ratings](#Relationship-Scores-&-Academic-Ratings)
   
 
 ## Scope of Analysis
@@ -70,7 +65,7 @@ These findings highlight that students' language status is not a primary predict
 
 [Discussion]
 
-#### Relationship Scores & Other Teacher Ratings
+#### Relationship Scores & Academic Ratings
 
 ##### Closeness
 <p align="center">
