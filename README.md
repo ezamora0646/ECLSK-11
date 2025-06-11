@@ -7,7 +7,7 @@
 - [Project Goals](#project-goals)
 - [Executive Summary](#executive-summary)
 - [Insights Deep Dive](#insights-deep-dive)
-  - [Kindergarten Main Effects](#kindergarten-main-effects)
+  - [Comparison of Average Trends & Main Effects](#Comparison-of-Average-Trends-&-Main-Effects)
     - [Demographics: Age & Gender](#demographics-age--gender)
       - [Female Gender](#female-gender)
       - [Age](#age)
@@ -15,11 +15,6 @@
       - [Conflict](#conflict)
       - [Attentional Focus](#attentional-focus)
       - [Fall ATL](#fall-atl)
-  - [First Grade Main Effects](#first-grade-main-effects)
-    - [Female Gender](#female-gender-1)
-    - [Age](#age-1)
-    - [Conflict](#conflict-1)
-    - [Longitudinal Effect of Attentional Focus](#longitudinal-effect-of-attentional-focus)
   
 
 ## Scope of Analysis
@@ -52,13 +47,14 @@ These findings highlight that students' language status is not a primary predict
 
 ## Insights Deep Dive
 
-### Kindergarten Main Effects 
+### Comparison of Average Trends & Main Effects 
 
 #### Demographics: Age & Gender
 
 ##### Female Gender
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf" alt="Image 1">
+  <img src="https://github.com/user-attachments/assets/193ec398-0c68-4b36-9e3d-2c408caac6b3" alt="Image">
 </p>
 
 
@@ -68,6 +64,7 @@ These findings highlight that students' language status is not a primary predict
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/6d9d0593-9089-411b-8b69-a1f459d71995" alt="Image 2">
+  <img src="https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f" alt="Image 8">
 </p>
 
 
@@ -76,6 +73,10 @@ These findings highlight that students' language status is not a primary predict
 #### Relationship Scores & Other Teacher Ratings
 
 ##### Closeness
+<p align="center">
+  <img src= "https://github.com/user-attachments/assets/21eede1c-1a7e-44ae-8198-11b02f5c2e7e">
+</p>
+
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6" alt="Image 3">
@@ -85,16 +86,24 @@ These findings highlight that students' language status is not a primary predict
 [Discussion]
 
 ##### Conflict
+<p align="center">
+  <img src= "https://github.com/user-attachments/assets/2d15f503-fba5-4b90-8906-c15b56e5e64f">
+</p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e3cadcad-1778-458e-9aa8-d77a12b9bebb" alt="Image 4">
+  <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9">
 </p>
 [Discussion]
 
 ##### Attentional Focus
+<p align="center">
+  <img src= "https://github.com/user-attachments/assets/7759bd57-04a8-435b-b3f0-2081ad704842">
+</p>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/f84d15d0-fd88-4487-b202-5ec2980e29bb" alt="Image 5">
+  <img src="https://github.com/user-attachments/assets/6a033b3f-70e5-4580-8bfe-92f410d2160a" alt="Image 10">
 </p>
 
 
@@ -103,47 +112,13 @@ These findings highlight that students' language status is not a primary predict
 ##### Fall ATL 
 
 <p align="center">
+  <img src="https://github.com/user-attachments/assets/9ecb4bd8-782d-46f4-a476-a840d4bd98c2">
+</p>
+
+<p align="center">
   <img src="https://github.com/user-attachments/assets/fd608853-53cb-4aec-beb9-1119818f168e" alt="Image 6">
 </p>
 
-
-[Discussion]
-
-### First Grade Main Effects
-
-#### Demographics: Age & Gender
-
-##### Female Gender
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/193ec398-0c68-4b36-9e3d-2c408caac6b3" alt="Image">
-</p>
-
-[Discussion]
-
-##### Age
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f" alt="Image 8">
-</p>
-
-
-[Discussion]
-
-#### Relationship Scores & Other Teacher Ratings
-
-##### Conflict
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9">
-</p>
-
-
-##### Longitduinal Effect of Attentional Focus
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/6a033b3f-70e5-4580-8bfe-92f410d2160a" alt="Image 10">
-</p>
 
 
 List references with links to publications this analysis was used for.
