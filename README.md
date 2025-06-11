@@ -10,6 +10,7 @@
   - [Comparison of Average Trends & Main Effects](#Comparison-of-Average-Trends-&-Main-Effects)
     - [Demographics: Age & Gender](#demographics-age--gender)
     - [Relationship Scores & Academic Ratings](#Relationship-Scores-&-Academic-Ratings)
+- [Recommendations](#recommendations)
   
 
 ## Scope of Analysis
@@ -51,9 +52,9 @@ These findings highlight that students' language status is not a primary predict
   <img src="https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf" alt="Image 1">
   <img src="https://github.com/user-attachments/assets/193ec398-0c68-4b36-9e3d-2c408caac6b3" alt="Image">
 </p>
+Depicted is the likelihood of a female student receiving a "High" ATL rating in the kindergarten and first grade years. Across the two years, the likelihood estimate (1.45 & 1.39) is stable and remains well above 1.0 which indicates a greater likelihood. The large confidence interval for the kindergarten estimate may suggest potential influence from other student such as their previous academic ratings or relationships with teachers, which will be explored below.  
+The confidence interval (depicted by the blue whiskers) are narrow for the first grade year meaning that the depicted range contains the true likelihood found in the student population. 
 
-
-[Discussion]
 
 ##### Age 
 
@@ -61,9 +62,7 @@ These findings highlight that students' language status is not a primary predict
   <img src="https://github.com/user-attachments/assets/6d9d0593-9089-411b-8b69-a1f459d71995" alt="Image 2">
   <img src="https://github.com/user-attachments/assets/b1d1445d-3c03-4177-bdc7-78153e53ec4f" alt="Image 8">
 </p>
-
-
-[Discussion]
+Age naturally increases as students progress through grades, so these trends are not depicted. EDA revealed that age was slightly correlated (0.07 - 0.09) with students' ATL scores in both years. This is confirmed by the model, which revealed a slight increased (1.05 & 1.06), yet statistically significant, likelihood of receiving a "High" ATL rating for older students Again, the estimate and confidence intervals are stable and narrow across the years, indicating that the true population value is within the indicated range.
 
 #### Relationship Scores & Academic Ratings
 
@@ -71,14 +70,13 @@ These findings highlight that students' language status is not a primary predict
 <p align="center">
   <img src= "https://github.com/user-attachments/assets/21eede1c-1a7e-44ae-8198-11b02f5c2e7e">
 </p>
-
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6" alt="Image 3">
 </p>
+Closeness was only measured at the end of the year, when teachers had enough experience with individual students to qualify their relationship so the average trends depict growth over one year. Average trends depict a decrease throughout the year. However, the 1-5 scale of this measure indicates that Latino students on average had close relationships with their teachers across all schools. 
 
+Closeness scores were moderately correlated (0.38 - 0.42) with students' ATL scores across both years. This relationship is confirmed by the kindergarten model, which reveals that students with a close relationship to their teacher have a 2.77-times greater likelihood of receiving a "High" ATL rating. This relationship did not hold in first grade, likely indicating that students' classroom behaviors become more potent predictors of their academic ratings as they progress in school.
 
-[Discussion]
 
 ##### Conflict
 <p align="center">
@@ -89,7 +87,9 @@ These findings highlight that students' language status is not a primary predict
   <img src="https://github.com/user-attachments/assets/e3cadcad-1778-458e-9aa8-d77a12b9bebb" alt="Image 4">
   <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9">
 </p>
-[Discussion]
+Conflict was also measured at the end of the year, so trends depict a one year period. Conflict also decreases overtime but students on average were already at the low end of conflict across schools, as this measure is on a 1-5 scale. 
+
+EDA revealed that conflict with teacher was moderately correlated (-0.47 & -0.61) with students' ATL scores. Both Kindergarten and First grade models confirm this finding, revealing that students with higher conflict have a decreased likelihood (0.37 & 0.27) of receiving a "High" ATL rating. Confidence intervals for both of the estimates indicate that the true population value would also reflect a decreased likelihood of receiving a "High" ATL rating.
 
 ##### Attentional Focus
 <p align="center">
@@ -100,9 +100,9 @@ These findings highlight that students' language status is not a primary predict
   <img src="https://github.com/user-attachments/assets/f84d15d0-fd88-4487-b202-5ec2980e29bb" alt="Image 5">
   <img src="https://github.com/user-attachments/assets/6a033b3f-70e5-4580-8bfe-92f410d2160a" alt="Image 10">
 </p>
+Average trends in students Attention Focus scores appear dynamic with a strong increase throughout kindergarten and a slight decrease after first grade. EDA findings mirror these trends as students' Kindergarten Attentional Focus scores are strongly correlated (0.79) with their ATL scores and moderately correlated (0.49) with their first grade ATL scores. 
 
-
-[Discussion]
+The kindergarten and first grade models also reflect the overall trends, such Kindergarten Attentional Focus scores indicate a greater likelihood of receiving an "High" ATL rating in Kindergarten (1.44) than in First grade (1.35). The confidence interval for both years is relatively the same, indicating that true population value is contained within this range. 
 
 ##### Fall ATL 
 
@@ -113,25 +113,29 @@ These findings highlight that students' language status is not a primary predict
 <p align="center">
   <img src="https://github.com/user-attachments/assets/fd608853-53cb-4aec-beb9-1119818f168e" alt="Image 6">
 </p>
+Average trends in ATL indicate the students experience more growht in Kindergarten than they do in First grade. EDA reveals a similar story for the correlations between Fall and Spring ATL, with the Fall of Kindergarten scores being more strongly correlated with Spring scores in Kindergarten (0.65) than First grade (0.51). 
+
+Interestingly, the first grade models do not find a longitudinal effect of students' kindergarten ATL scores. Meaning that the increased likelihood of recevining a "High" ATL rating for stidents with higher initial ATL is exclusive to the kindergarten year, perhaps explaining why students experience less growth in first grade compared to kindergarten.
+
+
+## Recommendations
+Strategic takeaway: Early-year Kindergarten conditions have lasting effects on how students are rated in their learning approaches. Investing in early interventions for relationhsip building and classroom engagement is essential for promoting academic equity and readiness.
+
+
+Based on the Closeness inisghts in the kindergarten year, program developers and school leaders should:
+
+1. Invest in relationship-building practices during kindergarten (e.g., smaller class sizes, SEL programs).
+2. Emphasize early-year rapport-building in professional development for teachers, given its outsized impact on learning behaviors.
+
+Based on the Conflict insights across 2 years Education leaders and platform designers should:
+
+1. Implement early conflict detection tools (e.g., teacher pulse surveys, behavior tagging).
+2. Offer targeted coaching or restorative practices where teacher–student conflict is identified.
+
+Given that Attentional Focus is a leading predictor Districts and assessment vendors should:
+
+1. Use Attentional Focus as a key screener for academic risk in early childhood.
+2. Develop classroom strategies or digital supports to improve focus and self-regulation as core learning skills.
 
 
 
-List references with links to publications this analysis was used for.
-
- __The genetic basis of natural variation in Caenorhabditis elegans telomere length__<br />
-Cook DE, Zdraljevic S, Tanny RE, Seo B, Riccardi DD, Noble LM, Rockman MV, Alkema MJ, Braendle C, Kammenga JE, Wang J, Kruglyak L, Fe ́ lix MA, Lee J, Andersen EC. <br />
-2016. Genetics 204:371–383. DOI: https://doi.org/10.1534/genetics.116. 191148, PMID: 27449056
-
-## Contributing
-
-Details regarding how to contribute. Coding style conventions, use of tests, etc.
-
-## Notes
-
-Additional notes / precatuions / etc. to make users aware of.
-
-## Authors
-
-List all authors, their contributions, and how to contact; Preferably an internal and external form of contact.
-
-* **Daniel E. Cook** - *Initial work* - [danielecook](https://github.com/danielecook); danielecook@gmail.com
