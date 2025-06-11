@@ -82,11 +82,11 @@ Closeness scores were moderately correlated (0.38 - 0.42) with students' ATL sco
 <p align="center">
   <img src= "https://github.com/user-attachments/assets/2d15f503-fba5-4b90-8906-c15b56e5e64f">
 </p>
-
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e3cadcad-1778-458e-9aa8-d77a12b9bebb" alt="Image 4">
   <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9">
 </p>
+
 Conflict was also measured at the end of the year, so trends depict a one year period. Conflict also decreases overtime but students on average were already at the low end of conflict across schools, as this measure is on a 1-5 scale. 
 
 EDA revealed that conflict with teacher was moderately correlated (-0.47 & -0.61) with students' ATL scores. Both Kindergarten and First grade models confirm this finding, revealing that students with higher conflict have a decreased likelihood (0.37 & 0.27) of receiving a "High" ATL rating. Confidence intervals for both of the estimates indicate that the true population value would also reflect a decreased likelihood of receiving a "High" ATL rating.
