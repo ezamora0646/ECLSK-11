@@ -70,7 +70,8 @@ Age naturally increases as students progress through grades, so these trends are
 
 <p align="center">
   <img src= "https://github.com/user-attachments/assets/21eede1c-1a7e-44ae-8198-11b02f5c2e7e">
-  <img src="https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6" alt="Image 3">
+  
+  <img src="https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6">
 </p>
 
 Closeness was only measured at the end of the year, when teachers had enough experience with individual students to qualify their relationship so the average trends depict growth over one year. Average trends depict a decrease throughout the year. However, the 1-5 scale of this measure indicates that Latino students on average had close relationships with their teachers across all schools. 
@@ -111,6 +112,7 @@ The predictive model confirmed that Attentional Focus was the strongest predicto
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/9ecb4bd8-782d-46f4-a476-a840d4bd98c2">
+  
   <img src="https://github.com/user-attachments/assets/fd608853-53cb-4aec-beb9-1119818f168e" alt="Image 6">
 </p>
 
