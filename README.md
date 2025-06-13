@@ -1,4 +1,4 @@
-# English Proficiency, Approaches to Learning, and the Moderating Role of Student-Teacher Relationships (SY 2010-2012)
+# Predictors of Latino Students' Approaches to Learning (SY 2010-2012)
 
 ## Table of Contents
 
