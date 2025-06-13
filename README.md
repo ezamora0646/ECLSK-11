@@ -46,10 +46,12 @@ These findings highlight that students' language status is not a primary predict
 #### Demographics: Age & Gender
 
 #### Girls consistently receive higher ATL ratings — but early estimates may reflect classroom perceptions, not behavior alone. 
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/bd454431-4622-4466-a37c-4e6baff38dbf" alt="Image 1">
   <img src="https://github.com/user-attachments/assets/193ec398-0c68-4b36-9e3d-2c408caac6b3" alt="Image">
 </p>
+
 Depicted is the likelihood of a female student receiving a "High" ATL rating in the kindergarten and first grade years. Across the two years, the likelihood ratios (1.45 & 1.39) indicates a **39%–45% higher likelihood** of receiving a "High" ATL rating, compared to male peers. The wider confidence interval in kindergarten suggests greater variability, possibly influenced by other factors explored below. In contrast, the first grade estimate has a narrower confidence interval, indicating greater precision and suggesting that the observed gender effect is more stable across the first grade student population.
 
 
@@ -65,6 +67,7 @@ Age naturally increases as students progress through grades, so these trends are
 #### Relationship Scores & Academic Ratings
 
 #### Early student-teacher closeness drives ATL — but the effect fades by first grade.
+
 <p align="center">
   <img src= "https://github.com/user-attachments/assets/21eede1c-1a7e-44ae-8198-11b02f5c2e7e">
   <img src="https://github.com/user-attachments/assets/bf919ebc-c4f9-49b4-88c6-67e895b7b6a6" alt="Image 3">
@@ -76,9 +79,11 @@ Closeness scores showed a moderate positive correlation (r = .38–.42) with ATL
 
 
 #### Conflict undermines ATL across both years — students with conflictual teacher relationships are consistently rated lower.
+
 <p align="center">
   <img src= "https://github.com/user-attachments/assets/2d15f503-fba5-4b90-8906-c15b56e5e64f">
 </p>
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e3cadcad-1778-458e-9aa8-d77a12b9bebb" alt="Image 4">
   <img src="https://github.com/user-attachments/assets/9e8dfb1b-6c31-4afd-a37c-e8355d38adc8" alt="Image 9">
@@ -89,6 +94,7 @@ Conflict was also measured at the end of the year, so trends depict a one year p
 EDA revealed that conflict with teacher was moderately correlated (-0.47 & -0.61) with students' ATL scores. Both Kindergarten and First grade models confirm this finding, revealing that students experiencing more conflict were **63%–73% less likely** to receive a ‘High’ ATL rating. Confidence intervals for both of the estimates indicate that the true population value would also reflect a decreased likelihood of receiving a "High" ATL rating.
 
 #### Attentional Focus is a key behavioral driver of ATL — and its influence remains strong over time.
+
 <p align="center">
   <img src= "https://github.com/user-attachments/assets/7759bd57-04a8-435b-b3f0-2081ad704842">
 </p>
